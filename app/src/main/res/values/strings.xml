@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Clothes</string>
+    <string name="title_home">All</string>
+    <string name="title_tops">Tops</string>
+    <string name="title_bottoms">Bottoms</string>
+    <string name="title_accessories">Accessories</string>
+    <string name="title_outerwears">Outerwears</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
