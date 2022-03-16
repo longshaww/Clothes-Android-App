@@ -1,4 +1,4 @@
-package Fragment;
+package vn.edu.huflit.clothes.Fragment;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;

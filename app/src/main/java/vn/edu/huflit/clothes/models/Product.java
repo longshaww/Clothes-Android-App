@@ -54,6 +54,10 @@ public class Product {
         return description;
     }
 
+    public String[] getImageList(){
+        return description.getImageList();
+    }
+
     public void setDescription(Description description) {
         this.description = description;
     }

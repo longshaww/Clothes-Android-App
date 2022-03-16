@@ -10,11 +10,10 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import Fragment.ViewPagerAdapter;
+import vn.edu.huflit.clothes.Fragment.ViewPagerAdapter;
 import vn.edu.huflit.clothes.API.ApiController;
 
 public class MainActivity extends AppCompatActivity {
-    ApiController apiController = new ApiController();
     private ViewPager2 viewPager2;
     private BottomNavigationView bottomNavigationView;
 
