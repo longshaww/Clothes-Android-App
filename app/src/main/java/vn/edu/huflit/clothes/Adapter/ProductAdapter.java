@@ -54,7 +54,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
 
         holder.productName.setText(product.getNameProduct());
-        Picasso.get().load(product.getImageList()[0]).into(holder.productImage);
+        Picasso.get().load("https:"+product.getImageList()[0]).into(holder.productImage);
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
