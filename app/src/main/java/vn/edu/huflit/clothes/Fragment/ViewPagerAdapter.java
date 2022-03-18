@@ -17,16 +17,16 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new HomeFragment();
             case 1:
-                return new TopsFragment();
+                return new FavouriteFragment();
             case 2:
-                return new BottomFragment();
+                return new CartFragment();
             default:
-                return new HomeFragment();
+                return new AccountFragment();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 }

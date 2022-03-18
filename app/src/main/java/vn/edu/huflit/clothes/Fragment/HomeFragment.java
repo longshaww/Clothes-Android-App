@@ -1,37 +1,33 @@
 package vn.edu.huflit.clothes.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import vn.edu.huflit.clothes.Adapter.ProductAdapter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Product;
 
 
 public class HomeFragment extends Fragment implements ProductAdapter.Listener{
-    private RecyclerView allProductView;
-    private ProductAdapter productAdapter;
+    private ImageView topCollection, bottomCollection, accessoriesCollection, outerWearCollection;
+    private TextView textViewCollection;
     private View mView;
+    private ImageSlider imageSlider;
+    List<SlideModel> slideModels;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,34 +39,46 @@ public class HomeFragment extends Fragment implements ProductAdapter.Listener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
-
-        allProductView = mView.findViewById(R.id.allProductView);
-        productAdapter = new ProductAdapter(getContext());
-        getAllProduct();
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
-        allProductView.setLayoutManager(gridLayoutManager);
-//        productAdapter.setList(getAllProduct());
-//        allProductView.setAdapter(productAdapter);
+        init();
+        initImageSlider();
+        setImageToView();
+        onClickTextCollection();
         return mView;
     }
 
-    public void getAllProduct() {
-        ApiService.apiService.getAllProduct().enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                productAdapter.setList(response.body());
-                allProductView.setAdapter(productAdapter);
-                if (response.body() != null) {
-                    System.out.println(productAdapter.getList().size());
-                }
-            }
+    public void init(){
+        textViewCollection = mView.findViewById(R.id.collections_text);
+        topCollection = mView.findViewById(R.id.top_collection);
+        bottomCollection = mView.findViewById(R.id.bottom_collection);
+        outerWearCollection = mView.findViewById(R.id.outerwear_collection);
+        accessoriesCollection = mView.findViewById(R.id.accesorie_collection);
+        imageSlider = mView.findViewById(R.id.image_slider);
+    }
 
+    public void onClickTextCollection(){
+        textViewCollection.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                System.out.println("Call API Failed");
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CollectionActivity.class);
+                startActivity(intent);
             }
         });
     }
+
+    public void setImageToView() {
+        topCollection.setImageResource(R.drawable.top);
+        bottomCollection.setImageResource(R.drawable.pant);
+        outerWearCollection.setImageResource(R.drawable.outerwear);
+        accessoriesCollection.setImageResource(R.drawable.accessorie);
+    }
+
+    public void initImageSlider(){
+        slideModels = new ArrayList<>();
+        slideModels.add(new SlideModel(R.drawable.slide1));
+        slideModels.add(new SlideModel(R.drawable.slide2));
+        imageSlider.setImageList(slideModels,true);
+    }
+
 
 
     @Override

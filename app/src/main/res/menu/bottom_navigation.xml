@@ -2,15 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_icons8_photo_gallery"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/title_home" />
     <item
-        android:id="@+id/navigation_tops"
-        android:icon="@drawable/ic_icons8_clothes_2"
-        android:title="@string/title_tops" />
+        android:id="@+id/navigation_favourite"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="@string/title_favourite" />
 
     <item
-        android:id="@+id/navigation_bottoms"
-        android:icon="@drawable/ic_icons8_trousers"
-        android:title="@string/title_bottoms" />
+        android:id="@+id/navigation_cart"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
+        android:title="@string/title_cart" />
+    <item
+        android:id="@+id/navigation_account"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="@string/tittle_account" />
 </menu>
