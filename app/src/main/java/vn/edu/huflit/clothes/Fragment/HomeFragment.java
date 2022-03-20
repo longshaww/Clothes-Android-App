@@ -3,6 +3,7 @@ package vn.edu.huflit.clothes.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import vn.edu.huflit.clothes.Activity.CollectionActivity;
+import vn.edu.huflit.clothes.Activity.TopActivity;
 import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Product;
@@ -24,6 +27,7 @@ import vn.edu.huflit.clothes.models.Product;
 
 public class HomeFragment extends Fragment implements ProductAdapter.Listener{
     private ImageView topCollection, bottomCollection, accessoriesCollection, outerWearCollection;
+    private CardView topCollectionCard,bottomCollectionCard,accessoriesCollectionCard,outerWearCollectionCard;
     private TextView textViewCollection;
     private View mView;
     private ImageSlider imageSlider;
@@ -43,6 +47,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.Listener{
         initImageSlider();
         setImageToView();
         onClickTextCollection();
+        onClickTopCollectionCard();
         return mView;
     }
 
@@ -53,6 +58,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.Listener{
         outerWearCollection = mView.findViewById(R.id.outerwear_collection);
         accessoriesCollection = mView.findViewById(R.id.accesorie_collection);
         imageSlider = mView.findViewById(R.id.image_slider);
+        topCollectionCard = mView.findViewById(R.id.top_collection_card);
     }
 
     public void onClickTextCollection(){
@@ -60,6 +66,16 @@ public class HomeFragment extends Fragment implements ProductAdapter.Listener{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CollectionActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void onClickTopCollectionCard (){
+        topCollectionCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), TopActivity.class);
                 startActivity(intent);
             }
         });

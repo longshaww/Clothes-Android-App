@@ -1,4 +1,4 @@
-package vn.edu.huflit.clothes.Fragment;
+package vn.edu.huflit.clothes.Activity;
 
 import android.os.Bundle;
 
@@ -28,7 +28,7 @@ public class CollectionActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_collection);
+        setContentView(R.layout.activity_collection);
         initRecyclerView();
     }
 
@@ -37,6 +37,7 @@ public class CollectionActivity extends AppCompatActivity {
         productAdapter = new ProductAdapter(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         allProductView.setLayoutManager(gridLayoutManager);
+        allProductView.setAdapter(productAdapter);
         getAllProduct();
     }
 
@@ -45,10 +46,8 @@ public class CollectionActivity extends AppCompatActivity {
         ApiService.apiService.getAllProduct().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                productAdapter.setList(response.body());
-                allProductView.setAdapter(productAdapter);
-                if (response.body() != null) {
-                    System.out.println(productAdapter.getList().size());
+                if (response.isSuccessful()) {
+                    productAdapter.setList(response.body());
                 }
             }
 

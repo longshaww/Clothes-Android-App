@@ -10,6 +10,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import vn.edu.huflit.clothes.models.Product;
 
 public interface ApiService {
@@ -27,4 +28,7 @@ public interface ApiService {
 
     @GET("/collections")
     Call<List<Product>> getAllProduct();
+
+    @GET("/collections/tops-without-pag")
+    Call<List<Product>> getTops();
 }

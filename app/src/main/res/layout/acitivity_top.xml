@@ -12,16 +12,16 @@
         android:layout_margin="10dp"
         >
         <TextView
-            android:id="@+id/collections_activity_text"
+            android:id="@+id/top_collection_acitvity_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:text="Collections"
+            android:text="Tops"
             android:layout_marginBottom="10dp"
             />
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/allProductView"
+            android:id="@+id/top_collection_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
