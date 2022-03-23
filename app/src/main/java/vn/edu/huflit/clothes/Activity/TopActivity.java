@@ -1,5 +1,6 @@
 package vn.edu.huflit.clothes.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,7 @@ import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Product;
 
-public class TopActivity extends AppCompatActivity {
+public class TopActivity extends AppCompatActivity implements ProductAdapter.Listener {
     private RecyclerView topCollectionView;
     private ProductAdapter productAdapter;
 
@@ -29,10 +30,8 @@ public class TopActivity extends AppCompatActivity {
 
     public void initRecyclerView() {
         topCollectionView = findViewById(R.id.top_collection_list);
-        productAdapter = new ProductAdapter(TopActivity.this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(TopActivity.this, 2);
         topCollectionView.setLayoutManager(gridLayoutManager);
-        topCollectionView.setAdapter(productAdapter);
         getTopList();
     }
 
@@ -41,7 +40,8 @@ public class TopActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    productAdapter.setList(response.body());
+                    productAdapter = new ProductAdapter(TopActivity.this,response.body(),TopActivity.this::onClick);
+                    topCollectionView.setAdapter(productAdapter);
                 }
             }
 
@@ -52,4 +52,12 @@ public class TopActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClick(Product product) {
+        Intent intent = new Intent(this,DetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("object_product",product);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
 }

@@ -1,8 +1,9 @@
 package vn.edu.huflit.clothes.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Product {
+public class Product implements Serializable {
     private String _id;
     private String nameProduct;
     private int price;
@@ -63,7 +64,7 @@ public class Product {
     }
 }
 
-class Size {
+class Size implements Serializable {
     private String sizeName;
     private int qty;
 
@@ -89,7 +90,7 @@ class Size {
     }
 }
 
-class Description {
+class Description implements Serializable {
     private String[] imageList;
     private String productDes;
     private int pirce;
@@ -142,22 +143,6 @@ class Description {
 
     public void setCollection(String collection) {
         this.collection = collection;
-    }
-}
-
-class ImageList {
-    private String url;
-
-    public ImageList(String url) {
-        this.url = url;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }
 

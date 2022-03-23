@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:layout_below="@+id/collections_activity_text"
+            android:layout_below="@+id/top_collection_acitvity_text"
             />
     </RelativeLayout>
 </ScrollView>

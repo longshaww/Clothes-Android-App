@@ -10,6 +10,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import vn.edu.huflit.clothes.models.Product;
 
@@ -21,7 +22,7 @@ public interface ApiService {
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.6:4000/")
+            .baseUrl("http://192.168.1.5:4000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
@@ -31,4 +32,7 @@ public interface ApiService {
 
     @GET("/collections/tops-without-pag")
     Call<List<Product>> getTops();
+
+    @GET("/product/{id}")
+    Call<Product> getProductDetail(@Path("id") String productId);
 }

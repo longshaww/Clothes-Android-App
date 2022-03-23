@@ -1,5 +1,6 @@
 package vn.edu.huflit.clothes.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,7 @@ import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Product;
 
 
-public class CollectionActivity extends AppCompatActivity {
+public class CollectionActivity extends AppCompatActivity implements ProductAdapter.Listener{
     private RecyclerView allProductView;
     private ProductAdapter productAdapter;
     @Override
@@ -34,10 +35,8 @@ public class CollectionActivity extends AppCompatActivity {
 
     public void initRecyclerView(){
         allProductView = findViewById(R.id.allProductView);
-        productAdapter = new ProductAdapter(this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         allProductView.setLayoutManager(gridLayoutManager);
-        allProductView.setAdapter(productAdapter);
         getAllProduct();
     }
 
@@ -47,7 +46,8 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    productAdapter.setList(response.body());
+                    productAdapter = new ProductAdapter(CollectionActivity.this,response.body(),CollectionActivity.this::onClick);
+                    allProductView.setAdapter(productAdapter);
                 }
             }
 
@@ -56,5 +56,14 @@ public class CollectionActivity extends AppCompatActivity {
                 System.out.println("Call API Failed");
             }
         });
+    }
+
+    @Override
+    public void onClick(Product product) {
+        Intent intent = new Intent(this,DetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("object_product",product);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

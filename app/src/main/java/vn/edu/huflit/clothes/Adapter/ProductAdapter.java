@@ -2,6 +2,7 @@ package vn.edu.huflit.clothes.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import vn.edu.huflit.clothes.Activity.DetailActivity;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Product;
 
@@ -24,8 +26,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private Listener listener;
     private Context context;
 
-    public ProductAdapter(Context context) {
+    public ProductAdapter(Context context, List<Product> list, ProductAdapter.Listener listener) {
+        this.list = list;
         this.context = context;
+        this.listener = listener;
     }
 
     public List<Product> getList() {
@@ -54,17 +58,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
 
         holder.productName.setText(product.getNameProduct());
-        Picasso.get().load("https:"+product.getImageList()[0]).into(holder.productImage);
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                listener.onClick(product);
-//                Intent intent = new Intent(context, product.class);
-//                intent.putExtra("id", movieItem.id);
-//                intent.putExtra("type", movieItem.media_type);
-//                context.startActivity(intent);
-//            }
-//        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClick(product);
+            }
+        });
+        Picasso.get().load("https:" + product.getImageList()[0]).into(holder.productImage);
+
     }
 
     @Override
@@ -74,7 +75,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
         return 0;
     }
-
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {

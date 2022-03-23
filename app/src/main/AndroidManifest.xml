@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".Activity.CollectionActivity"></activity>
         <activity android:name=".Activity.TopActivity"></activity>
+        <activity android:name=".Activity.DetailActivity"></activity>
+
     </application>
 
 </manifest>
