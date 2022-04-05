@@ -1,6 +1,7 @@
 package vn.edu.huflit.clothes.Activity;
 
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,6 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,17 +26,29 @@ import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Product;
 
 public class DetailActivity extends AppCompatActivity {
-    TextView detailText;
+    RelativeLayout relativeLayout;
+    ImageSlider imageSlider;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         init();
+        slider();
+    }
+
+    private void slider(){
+        imageSlider = findViewById(R.id.sliderDetail);
+        List<SlideModel> slideModels = new ArrayList<>();
+        slideModels.add(new SlideModel(R.drawable.accessorie));
+        slideModels.add(new SlideModel(R.drawable.outerwear));
+        slideModels.add(new SlideModel(R.drawable.pant));
+
+        imageSlider.setImageList(slideModels,true);
     }
 
     private void init(){
-        detailText = findViewById(R.id.detailText);
+        relativeLayout = findViewById(R.id.relativeLayout);
         getIncomingIntent();
     }
 
@@ -45,6 +62,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setIncomingIntent(Product product) {
-        detailText.setText(product.getNameProduct());
+
     }
 }
