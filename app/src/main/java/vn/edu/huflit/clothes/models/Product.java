@@ -35,7 +35,8 @@ public class Product implements Serializable {
         this.nameProduct = nameProduct;
     }
 
-    public int getPrice() {
+    public String getPrice() {
+        String price = Integer.toString(description.getPirce());
         return price;
     }
 
@@ -51,8 +52,8 @@ public class Product implements Serializable {
         this.size = size;
     }
 
-    public Description getDescription() {
-        return description;
+    public String getDescription() {
+        return description.getProductDes();
     }
 
     public String[] getImageList(){
@@ -62,6 +63,7 @@ public class Product implements Serializable {
     public void setDescription(Description description) {
         this.description = description;
     }
+
 }
 
 class Size implements Serializable {
@@ -93,14 +95,14 @@ class Size implements Serializable {
 class Description implements Serializable {
     private String[] imageList;
     private String productDes;
-    private int pirce;
+    private int price;
     private String type;
     private String collection;
 
     public Description(String[] imageList, String productDes, int pirce, String type, String collection) {
         this.imageList = imageList;
         this.productDes = productDes;
-        this.pirce = pirce;
+        this.price = pirce;
         this.type = type;
         this.collection = collection;
     }
@@ -122,11 +124,11 @@ class Description implements Serializable {
     }
 
     public int getPirce() {
-        return pirce;
+        return price;
     }
 
-    public void setPirce(int pirce) {
-        this.pirce = pirce;
+    public void setPirce(int price) {
+        this.price = price;
     }
 
     public String getType() {

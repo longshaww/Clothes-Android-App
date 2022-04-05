@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,27 +29,23 @@ import vn.edu.huflit.clothes.models.Product;
 public class DetailActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     ImageSlider imageSlider;
+    TextView txtNameDetail,txtOverviewDetail,txtPriceDetail;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         init();
-        slider();
     }
 
-    private void slider(){
-        imageSlider = findViewById(R.id.sliderDetail);
-        List<SlideModel> slideModels = new ArrayList<>();
-        slideModels.add(new SlideModel(R.drawable.accessorie));
-        slideModels.add(new SlideModel(R.drawable.outerwear));
-        slideModels.add(new SlideModel(R.drawable.pant));
-
-        imageSlider.setImageList(slideModels,true);
-    }
 
     private void init(){
+        imageSlider = findViewById(R.id.sliderDetail);
         relativeLayout = findViewById(R.id.relativeLayout);
+        txtNameDetail = findViewById(R.id.txtNameDetail);
+        txtOverviewDetail = findViewById(R.id.txtOverviewDetail);
+        txtPriceDetail = findViewById(R.id.txtPriceDetail);
         getIncomingIntent();
     }
 
@@ -62,6 +59,14 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setIncomingIntent(Product product) {
+        txtNameDetail.setText(product.getNameProduct());
+        txtOverviewDetail.setText(product.getDescription());
+        txtPriceDetail.setText(product.getPrice()+"000đ");
 
+        List<SlideModel> slideModels = new ArrayList<>();
+        System.out.println(product.getImageList()[0]);
+        slideModels.add(new SlideModel("https://"+product.getImageList()[0]));
+        slideModels.add(new SlideModel("https://"+product.getImageList()[1]));
+        imageSlider.setImageList(slideModels,true);
     }
 }
