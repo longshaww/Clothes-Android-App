@@ -55,9 +55,7 @@ public class TopActivity extends AppCompatActivity implements ProductAdapter.Lis
     @Override
     public void onClick(Product product) {
         Intent intent = new Intent(this,DetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("object_product",product);
-        intent.putExtras(bundle);
+        intent.putExtra("idProduct",product.get_id());
         startActivity(intent);
     }
 }

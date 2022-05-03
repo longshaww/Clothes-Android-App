@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="10dp"
+    app:cardCornerRadius="6dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:id="@+id/deleteCartBtn"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/delete_icon"
+            />
+        <ImageView
+            android:id="@+id/imgProductCart"
+            android:layout_width="120dp"
+            android:layout_height="150dp"
+            android:layout_toEndOf="@+id/deleteCartBtn"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <LinearLayout
+            android:id="@+id/productContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imgProductCart"
+            android:orientation="vertical"
+            android:paddingHorizontal="40dp">
+
+            <TextView
+                android:id="@+id/productNameCart"
+                android:layout_width="100dp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                android:text="Printed hoodie" />
+
+            <TextView
+                android:id="@+id/productSizeCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                android:text="Size L"
+
+                />
+
+            <TextView
+                android:id="@+id/productTotalCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                android:text="300.000đ" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/productContent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/increaseBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/add_icon" />
+
+
+            <TextView
+                android:id="@+id/productQty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="qty"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/decreaseBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/minus_icon" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
