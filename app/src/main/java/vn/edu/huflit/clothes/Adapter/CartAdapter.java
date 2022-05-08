@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import vn.edu.huflit.clothes.CartHelper;
@@ -115,7 +117,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView productImage, deleteCartBtn, increaseBtn, decreaseBtn;
-        private TextView productName, productSize, productTotal, productQty;
+        private TextView productName, productSize, productTotal, productQty,totalPrice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -127,6 +129,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             increaseBtn = itemView.findViewById(R.id.increaseBtn);
             decreaseBtn = itemView.findViewById(R.id.decreaseBtn);
             productQty = itemView.findViewById(R.id.productQty);
+            totalPrice = itemView.findViewById(R.id.totalPrice);
         }
     }
 
