@@ -12,7 +12,6 @@
         <item name="windowNoTitle">true</item>
     </style>
     <style name="Button1" parent="Widget.AppCompat.Button.Colored">
-        <item name="android:background">@drawable/button1_bg</item>
         <item name="android:minWidth">200dp</item>
         <item name="android:textColor">#FFF</item>
         <item name="android:textStyle">bold</item>

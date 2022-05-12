@@ -254,9 +254,6 @@
                     android:text="@string/button_sign_up" />
 
             </LinearLayout>
-
         </RelativeLayout>
-
-
     </ScrollView>
 </RelativeLayout>

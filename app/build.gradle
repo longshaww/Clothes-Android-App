@@ -4,7 +4,6 @@ plugins {
 
 android {
     compileSdkVersion 31
-    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "vn.edu.huflit.clothes"
@@ -36,6 +35,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation 'com.google.code.gson:gson:2.9.0'
@@ -44,4 +44,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.denzcoskun:ImageSlideshow:0.0.6'
     implementation "androidx.cardview:cardview:1.0.0"
+    //noinspection GradleCompatible
+    implementation "com.android.support:support-compat:28.0.0"
+    //noinspection GradleCompatible
+    implementation "com.android.support:design:28.0.0"
 }
