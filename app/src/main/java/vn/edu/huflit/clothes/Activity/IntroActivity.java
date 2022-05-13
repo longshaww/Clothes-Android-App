@@ -45,8 +45,8 @@ public class IntroActivity extends AppCompatActivity {
         // when this activity is about to be launch we need to check if its openened before or not
         if (restorePrefData()) {
 
-            Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class );
-            startActivity(mainActivity);
+            Intent intent = new Intent(getApplicationContext(), SigninActivity.class );
+            startActivity(intent);
             finish();
         }
 

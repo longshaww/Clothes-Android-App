@@ -117,7 +117,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
-                android:text="@string/button_sign_in" />
+                android:text="@string/button_sign_in"
+                app:cornerRadius="20dp" />
 
             <Button
                 android:id="@+id/button_signup"
