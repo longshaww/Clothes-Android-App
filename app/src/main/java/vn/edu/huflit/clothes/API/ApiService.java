@@ -9,10 +9,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import vn.edu.huflit.clothes.models.Product;
+import vn.edu.huflit.clothes.models.User;
+import vn.edu.huflit.clothes.models.UserLoginDTO;
 
 public interface ApiService {
     //http://localhost:4000/
@@ -27,12 +31,15 @@ public interface ApiService {
             .build()
             .create(ApiService.class);
 
-    @GET("/collections")
+    @GET("collections")
     Call<List<Product>> getAllProduct();
 
-    @GET("/collections/tops-without-pag")
+    @GET("collections/tops-without-pag")
     Call<List<Product>> getTops();
 
-    @GET("/product/{id}")
+    @GET("product/{id}")
     Call<Product> getProductDetail(@Path("id") String productId);
+
+    @POST("authCookie/login")
+    Call<UserLoginDTO> login(@Body UserLoginDTO user);
 }
