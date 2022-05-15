@@ -41,5 +41,5 @@ public interface ApiService {
     Call<Product> getProductDetail(@Path("id") String productId);
 
     @POST("authCookie/login")
-    Call<UserLoginDTO> login(@Body UserLoginDTO user);
+    Call<User> login(@Body UserLoginDTO user);
 }

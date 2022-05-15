@@ -16,8 +16,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import vn.edu.huflit.clothes.Activity.DetailActivity;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Product;
 

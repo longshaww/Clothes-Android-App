@@ -8,6 +8,8 @@ public class User {
     private Date dateOfBirth;
     private Boolean gender;
     private String avatar;
+    private Customer customer;
+    private Boolean isAdmin;
 
     public User(String email, String password, Date dateOfBirth, Boolean gender, String avatar, Customer customer, Boolean isAdmin) {
         this.email = email;
@@ -75,8 +77,17 @@ public class User {
         isAdmin = admin;
     }
 
-    private Customer customer;
-    private Boolean isAdmin;
+    public String getName() {
+        return customer.getNameCustomer();
+    }
+
+    public String getAddress(){
+        return customer.getAddress();
+    }
+
+    public String getPhoneNumber(){
+        return customer.getPhoneNumber();
+    }
 }
 
 class Customer {

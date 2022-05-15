@@ -1,7 +1,9 @@
 package vn.edu.huflit.clothes.Activity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,9 +41,9 @@ import vn.edu.huflit.clothes.models.Product;
 public class DetailActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     ImageSlider imageSlider;
-    TextView txtNameDetail,txtOverviewDetail,txtPriceDetail;
+    TextView txtNameDetail, txtOverviewDetail, txtPriceDetail;
     Button addToCartBtn;
-    RadioButton rdM,rdL,rdXL;
+    RadioButton rdM, rdL, rdXL;
 
 
     @Override
@@ -50,8 +53,7 @@ public class DetailActivity extends AppCompatActivity {
         init();
     }
 
-
-    private void init(){
+    private void init() {
         imageSlider = findViewById(R.id.sliderDetail);
         relativeLayout = findViewById(R.id.relativeLayout);
         txtNameDetail = findViewById(R.id.txtNameDetail);
@@ -64,11 +66,11 @@ public class DetailActivity extends AppCompatActivity {
         getIncomingIntent();
     }
 
-    private String onCheckedChange(){
-        if(rdL.isChecked()){
+    private String onCheckedChange() {
+        if (rdL.isChecked()) {
             return rdL.getText().toString();
         }
-        if(rdXL.isChecked()){
+        if (rdXL.isChecked()) {
             return rdXL.getText().toString();
         }
         return rdM.getText().toString();
@@ -94,19 +96,19 @@ public class DetailActivity extends AppCompatActivity {
     private void setIncomingIntent(Product product) {
         txtNameDetail.setText(product.getNameProduct());
         txtOverviewDetail.setText(product.getDescription());
-        txtPriceDetail.setText(product.getPrice()+".000đ");
+        txtPriceDetail.setText(product.getPrice() + ".000đ");
 
         addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CartHelper cartHelper = new CartHelper(getBaseContext());
-                cartHelper.insertCart(product.get_id(),product.getImageList()[0],product.getNameProduct(),product.getPrice(),product.getDescription(),onCheckedChange(),"1",product.getPrice());
+                cartHelper.insertCart(product.get_id(), product.getImageList()[0], product.getNameProduct(), product.getPrice(), product.getDescription(), onCheckedChange(), "1", product.getPrice());
             }
         });
         List<SlideModel> slideModels = new ArrayList<>();
         System.out.println(product.getImageList()[0]);
-        slideModels.add(new SlideModel("https://"+product.getImageList()[0]));
-        slideModels.add(new SlideModel("https://"+product.getImageList()[1]));
-        imageSlider.setImageList(slideModels,true);
+        slideModels.add(new SlideModel("https://" + product.getImageList()[0]));
+        slideModels.add(new SlideModel("https://" + product.getImageList()[1]));
+        imageSlider.setImageList(slideModels, true);
     }
 }
