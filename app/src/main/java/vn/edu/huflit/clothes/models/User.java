@@ -3,6 +3,7 @@ package vn.edu.huflit.clothes.models;
 import java.util.Date;
 
 public class User {
+    private String _id;
     private String email;
     private String password;
     private Date dateOfBirth;
@@ -11,7 +12,7 @@ public class User {
     private Customer customer;
     private Boolean isAdmin;
 
-    public User(String email, String password, Date dateOfBirth, Boolean gender, String avatar, Customer customer, Boolean isAdmin) {
+    public User(String _id, String email, String password, Date dateOfBirth, Boolean gender, String avatar, Customer customer, Boolean isAdmin) {
         this.email = email;
         this.password = password;
         this.dateOfBirth = dateOfBirth;
@@ -19,6 +20,7 @@ public class User {
         this.avatar = avatar;
         this.customer = customer;
         this.isAdmin = isAdmin;
+        this._id = _id;
     }
 
     public String getEmail() {
@@ -81,12 +83,16 @@ public class User {
         return customer.getNameCustomer();
     }
 
-    public String getAddress(){
+    public String getAddress() {
         return customer.getAddress();
     }
 
-    public String getPhoneNumber(){
+    public String getPhoneNumber() {
         return customer.getPhoneNumber();
+    }
+
+    public String getID() {
+        return _id;
     }
 }
 

@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +30,8 @@ public class AccountFragment extends Fragment {
     Button logoutBtn;
     SharedPreferences sharedPreferences;
     Gson gson;
-
+    EditText nameAccount,emailAccount,phoneAccount,addressAccount;
+    ImageView avatarAccount;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,13 @@ public class AccountFragment extends Fragment {
         sharedPreferences = this.getActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
         gson = new Gson();
         logoutBtn = mView.findViewById(R.id.logout_btn);
+
+        nameAccount = mView.findViewById(R.id.name_account);
+        emailAccount = mView.findViewById(R.id.email_account);
+        phoneAccount = mView.findViewById(R.id.phone_account);
+        addressAccount = mView.findViewById(R.id.addess_account);
+        avatarAccount = mView.findViewById(R.id.avatar_account);
+
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,11 +76,23 @@ public class AccountFragment extends Fragment {
                 }
             }
         });
+        handleSharePreferences();
+    }
+
+    public void handleSharePreferences() {
         String userJSON = sharedPreferences.getString("user", "0");//second parameter is necessary ie.,Value to return if this preference does not exist.
         if (userJSON != null) {
-            User user = gson.fromJson(userJSON,User.class);
-            Toast.makeText(getActivity(), user.getName(), Toast.LENGTH_SHORT).show();
+            User user = gson.fromJson(userJSON, User.class);
+            setTextToView(user);
         }
+    }
+
+    public void setTextToView(User user) {
+        nameAccount.setText(user.getName());
+        emailAccount.setText(user.getEmail());
+        phoneAccount.setText(user.getPhoneNumber());
+        addressAccount.setText(user.getAddress());
+        Picasso.get().load(user.getAvatar()).into(avatarAccount);
     }
 
 
