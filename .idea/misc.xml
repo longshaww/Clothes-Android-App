@@ -49,6 +49,9 @@
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/layout_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/product_card.xml" value="0.36666666666666664" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.1640625" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.1640625" />
+        <entry key="app/src/main/res/layout/fragment_cart.xml" value="0.1640625" />
       </map>
     </option>
   </component>

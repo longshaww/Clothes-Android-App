@@ -20,12 +20,11 @@ import vn.edu.huflit.clothes.CartHelper;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Cart;
 
-public class CartFragment extends Fragment implements CartAdapter.Listener {
+public class CartFragment extends Fragment implements CartAdapter.Listener , CartAdapter.UpdateTotal{
     private View mView;
     RecyclerView rcvCart;
     CartAdapter cartAdapter;
     TextView totalPrice;
-    Button updateTotalPrice;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,27 +50,21 @@ public class CartFragment extends Fragment implements CartAdapter.Listener {
     private void init() {
         CartHelper cartHelper = new CartHelper(getContext());
         totalPrice = mView.findViewById(R.id.totalPrice);
-        updateTotalPrice = mView.findViewById(R.id.updateTotalPrice);
-        updateTotalPrice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Double total = cartHelper.getAllProductCart().stream().mapToDouble(cart -> cart.getPrice() * cart.getQty()).sum();
-                totalPrice.setText(total.toString());
-            }
-        });
-
         rcvCart = mView.findViewById(R.id.rcvCart);
-        cartAdapter = new CartAdapter(getContext(), cartHelper.getAllProductCart(), this::onClick);
+        cartAdapter = new CartAdapter(getContext(), cartHelper.getAllProductCart(), this::onClick,this::updateCartTotal);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rcvCart.setAdapter(cartAdapter);
         rcvCart.setLayoutManager(linearLayoutManager);
-        Double total = cartHelper.getAllProductCart().stream().mapToDouble(cart -> cart.getPrice() * cart.getQty()).sum();
-        totalPrice.setText(total.toString());
     }
 
 
     @Override
     public void onClick(Cart cart) {
 
+    }
+
+    @Override
+    public void updateCartTotal(String total) {
+        totalPrice.setText(total);
     }
 }

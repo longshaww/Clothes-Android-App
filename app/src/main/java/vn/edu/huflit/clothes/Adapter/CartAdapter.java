@@ -21,17 +21,19 @@ import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Cart;
 
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder>  {
     private List<Cart> list;
     private CartAdapter.Listener listener;
     private Context context;
     private CartHelper cartHelper;
+    private UpdateTotal updateTotal;
 
-    public CartAdapter(Context context, List<Cart> list, CartAdapter.Listener listener) {
+    public CartAdapter(Context context, List<Cart> list, CartAdapter.Listener listener,UpdateTotal updateTotal) {
         this.list = list;
         this.context = context;
         this.listener = listener;
         cartHelper = new CartHelper(context);
+        this.updateTotal = updateTotal;
     }
 
 
@@ -87,6 +89,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 Integer getTotal = cart.getPrice() * Integer.parseInt(holder.productQty.getText().toString());
                 holder.productTotal.setText(Integer.toString(getTotal));
                 cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(),holder.productTotal.getText().toString());
+                Double total = cartHelper.getAllProductCart().stream().mapToDouble(cart -> cart.getPrice() * cart.getQty()).sum();
+                updateTotal.updateCartTotal(total.toString());
             }
         });
         holder.decreaseBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +106,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 Integer getTotal = cart.getPrice() * Integer.parseInt(holder.productQty.getText().toString());
                 holder.productTotal.setText(Integer.toString(getTotal));
                 cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(),holder.productTotal.getText().toString());
+                Double total = cartHelper.getAllProductCart().stream().mapToDouble(cart -> cart.getPrice() * cart.getQty()).sum();
+                updateTotal.updateCartTotal(total.toString());
             }
         });
     }
@@ -135,6 +141,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public interface Listener {
         void onClick(Cart cart);
+    }
+
+    public interface UpdateTotal {
+        void updateCartTotal(String total);
     }
 
 }

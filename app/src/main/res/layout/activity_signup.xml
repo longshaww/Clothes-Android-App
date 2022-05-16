@@ -33,43 +33,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/signup_image_layout"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/dummy_image"
-                        tools:ignore="MissingClass" />
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:layout_marginBottom="1dp"
-                        app:srcCompat="@drawable/ic_plus" />
-                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="20dp"
                     android:text="@string/text_signup_message"
                     android:textColor="#696969"
-                    android:textSize="16sp"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
                 <androidx.cardview.widget.CardView
@@ -84,6 +56,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
                         app:hintEnabled="false">
 
@@ -119,11 +92,12 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_username"
+                            android:id="@+id/et_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -133,7 +107,7 @@
                             android:drawableStart="@drawable/ic_person"
                             android:drawableLeft="@drawable/ic_person"
                             android:drawablePadding="12dp"
-                            android:hint="@string/hint_username"
+                            android:hint="Name"
                             android:imeOptions="actionNext"
                             android:minWidth="320dp"
                             android:minHeight="45dp"
@@ -153,6 +127,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
                         app:hintEnabled="false">
 
@@ -187,11 +162,48 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:background="@android:color/transparent"
+                            android:drawableStart="@drawable/ic_phone"
+                            android:drawableLeft="@drawable/ic_phone"
+                            android:drawablePadding="18dp"
+                            android:hint="Address"
+                            android:imeOptions="actionNext"
+                            android:minWidth="320dp"
+                            android:minHeight="45dp"
+                            android:singleLine="true" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    app:cardBackgroundColor="@color/colorTextInputBackground"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center"
                         app:hintEnabled="false"
                         app:passwordToggleEnabled="true">
 
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_password"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -224,9 +236,10 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         app:hintEnabled="false"
+                        android:layout_marginBottom="8dp"
                         app:passwordToggleEnabled="true">
 
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_confirm_password"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -246,7 +259,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <Button
-                    android:id="@+id/button_signin"
+                    android:id="@+id/button_sign_up"
                     style="@style/Button1"
                     android:layout_width="342dp"
                     android:layout_height="wrap_content"

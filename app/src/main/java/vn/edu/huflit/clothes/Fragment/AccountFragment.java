@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import vn.edu.huflit.clothes.Activity.SigninActivity;
 import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
@@ -31,7 +32,7 @@ public class AccountFragment extends Fragment {
     SharedPreferences sharedPreferences;
     Gson gson;
     EditText nameAccount,emailAccount,phoneAccount,addressAccount;
-    ImageView avatarAccount;
+    CircleImageView avatarAccount;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

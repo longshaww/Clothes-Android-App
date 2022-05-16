@@ -3,14 +3,14 @@ package vn.edu.huflit.clothes.models;
 import java.util.Date;
 
 public class User {
-    private String _id;
-    private String email;
-    private String password;
-    private Date dateOfBirth;
-    private Boolean gender;
-    private String avatar;
-    private Customer customer;
-    private Boolean isAdmin;
+    public String _id;
+    public String email;
+    public String password;
+    public Date dateOfBirth;
+    public Boolean gender;
+    public String avatar;
+    public Customer customer;
+    public Boolean isAdmin;
 
     public User(String _id, String email, String password, Date dateOfBirth, Boolean gender, String avatar, Customer customer, Boolean isAdmin) {
         this.email = email;

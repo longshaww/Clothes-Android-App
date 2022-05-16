@@ -42,17 +42,9 @@
                 android:id="@+id/totalPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/updateTotalPrice"
+                android:layout_alignParentEnd="true"
                 android:text="300.000đ"
                 android:textSize="20dp" />
-
-            <Button
-                android:id="@+id/updateTotalPrice"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:drawableTop="@drawable/refresh_btn" />
-            />
 
         </RelativeLayout>
     </LinearLayout>

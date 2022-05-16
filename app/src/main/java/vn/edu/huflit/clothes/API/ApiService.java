@@ -17,16 +17,18 @@ import retrofit2.http.Query;
 import vn.edu.huflit.clothes.models.Product;
 import vn.edu.huflit.clothes.models.User;
 import vn.edu.huflit.clothes.models.UserLoginDTO;
+import vn.edu.huflit.clothes.models.UserRegisterDTO;
 
 public interface ApiService {
-    //http://localhost:4000/
+
+    //http://95.111.203.4:4000/
 
     Gson gson = new GsonBuilder()
             .setDateFormat("dd-MM-yyyy HH:mm:ss")
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.6:4000/")
+            .baseUrl("http://95.111.203.4:4000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
@@ -42,4 +44,7 @@ public interface ApiService {
 
     @POST("authCookie/login")
     Call<User> login(@Body UserLoginDTO user);
+
+    @POST("authCookie/register")
+    Call<User> register(@Body UserRegisterDTO user);
 }
