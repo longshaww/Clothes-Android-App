@@ -5,12 +5,16 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -18,7 +22,12 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.Activity.CollectionActivity;
+import vn.edu.huflit.clothes.Activity.DetailActivity;
 import vn.edu.huflit.clothes.Activity.TopActivity;
 import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.R;
@@ -31,7 +40,10 @@ public class HomeFragment extends Fragment implements ProductAdapter.Listener{
     private TextView textViewCollection;
     private View mView;
     private ImageSlider imageSlider;
+    private RecyclerView newArrivalsRcv;
+    private ProductAdapter productAdapter;
     List<SlideModel> slideModels;
+    ArrayList listNewArrivals;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,6 +71,34 @@ public class HomeFragment extends Fragment implements ProductAdapter.Listener{
         accessoriesCollection = mView.findViewById(R.id.accesorie_collection);
         imageSlider = mView.findViewById(R.id.image_slider);
         topCollectionCard = mView.findViewById(R.id.top_collection_card);
+        newArrivalsRcv = mView.findViewById(R.id.newArrivalRcv);
+        initRcv();
+    }
+
+    public void initRcv(){
+        listNewArrivals = new ArrayList();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        newArrivalsRcv.setLayoutManager(linearLayoutManager);
+        productAdapter = new ProductAdapter(getContext(), listNewArrivals,this::onClick);
+        newArrivalsRcv.setAdapter(productAdapter);
+        getNewArrivals();
+    }
+
+    public void getNewArrivals(){
+        ApiService.apiService.getNewArrivals().enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if(response.isSuccessful()){
+                    productAdapter.setList(response.body());
+                    productAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(getContext(), "Something wrong ~!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void onClickTextCollection(){
@@ -99,6 +139,8 @@ public class HomeFragment extends Fragment implements ProductAdapter.Listener{
 
     @Override
     public void onClick(Product product) {
-
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra("idProduct", product.get_id());
+        startActivity(intent);
     }
 }

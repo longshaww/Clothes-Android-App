@@ -93,7 +93,10 @@ public class AccountFragment extends Fragment {
         emailAccount.setText(user.getEmail());
         phoneAccount.setText(user.getPhoneNumber());
         addressAccount.setText(user.getAddress());
-        Picasso.get().load(user.getAvatar()).into(avatarAccount);
+        if (user.getAvatar() != null) {
+            Picasso.get().load(user.getAvatar()).into(avatarAccount);
+        }
+
     }
 
 

@@ -9,36 +9,41 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/search_view"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/search_view"
-            app:queryHint="What are you looking for" />
+            android:layout_height="50dp"
+            android:src="@drawable/app_logo"
+            android:layout_marginBottom="10dp"
+            />
 
         <com.denzcoskun.imageslider.ImageSlider
             android:id="@+id/image_slider"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:layout_below="@+id/search_view"
             android:layout_marginBottom="20dp"
             app:auto_cycle="true"
             app:corner_radius="20"
             app:delay="0"
             app:period="1000" />
 
+
+        <ImageView
+            android:id="@+id/singleImage1"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/instagram" />
+
         <TextView
             android:id="@+id/collections_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/image_slider"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="Collections"
@@ -50,7 +55,7 @@
             android:id="@+id/gridCollections"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/collections_text"
+            android:layout_marginBottom="20dp"
             android:columnCount="2"
             android:rowCount="2">
 
@@ -176,5 +181,26 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </GridLayout>
-    </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/singleImage2"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/instagram2" />
+        <TextView
+            android:id="@+id/newArrivalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="New Arrivals"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/newArrivalRcv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </ScrollView>

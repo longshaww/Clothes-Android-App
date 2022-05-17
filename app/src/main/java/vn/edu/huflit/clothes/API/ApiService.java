@@ -36,11 +36,17 @@ public interface ApiService {
     @GET("collections")
     Call<List<Product>> getAllProduct();
 
+    @GET("search")
+    Call<List<Product>> search(@Query("q") String nameProduct);
+
     @GET("collections/tops-without-pag")
     Call<List<Product>> getTops();
 
     @GET("product/{id}")
     Call<Product> getProductDetail(@Path("id") String productId);
+
+    @GET("collections/new-arrivals-without-pag")
+    Call<List<Product>> getNewArrivals();
 
     @POST("authCookie/login")
     Call<User> login(@Body UserLoginDTO user);

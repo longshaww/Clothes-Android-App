@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 if (id == R.id.navigation_home) {
                     viewPager2.setCurrentItem(0);
-                } else if (id == R.id.navigation_favourite) {
+                } else if (id == R.id.navigation_search) {
                     viewPager2.setCurrentItem(1);
                 } else if (id == R.id.navigation_cart) {
                     viewPager2.setCurrentItem(2);
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         bottomNavigationView.getMenu().findItem(R.id.navigation_home).setChecked(true);
                         break;
                     case 1:
-                        bottomNavigationView.getMenu().findItem(R.id.navigation_favourite).setChecked(true);
+                        bottomNavigationView.getMenu().findItem(R.id.navigation_search).setChecked(true);
                         break;
                     case 3:
                         bottomNavigationView.getMenu().findItem(R.id.navigation_cart).setChecked(true);

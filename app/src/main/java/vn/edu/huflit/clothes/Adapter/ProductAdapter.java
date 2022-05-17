@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.ImageAPI;
 import vn.edu.huflit.clothes.models.Product;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
@@ -56,14 +57,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
 
         holder.productName.setText(product.getNameProduct());
+        holder.productPrice.setText(product.getPrice()+",000 VNĐ");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onClick(product);
             }
         });
-        Picasso.get().load("https:" + product.getImageList()[0]).into(holder.productImage);
-
+        ImageAPI.getCorner("https:" + product.getImageList()[0],holder.productImage);
     }
 
     @Override
@@ -77,12 +78,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView productImage;
-        private TextView productName;
+        private TextView productName,productPrice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             productImage = itemView.findViewById(R.id.productImage);
             productName = itemView.findViewById(R.id.productName);
+            productPrice = itemView.findViewById(R.id.productPrice);
         }
     }
 
