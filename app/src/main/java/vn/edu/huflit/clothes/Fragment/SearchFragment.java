@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -14,7 +17,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,11 +36,14 @@ import vn.edu.huflit.clothes.models.Product;
 
 public class SearchFragment extends Fragment implements ProductAdapter.Listener {
     private View mView;
-    RecyclerView searchRcv;
     EditText searchInput;
     ArrayList listProducts;
     RecyclerView productRcv;
     ProductAdapter productAdapter;
+    TextView notFoundText;
+    RadioButton radioHighToLow, radioLowToHigh;
+    RadioGroup radioPriceGroup;
+    String ascendingState, descendingState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,16 +59,38 @@ public class SearchFragment extends Fragment implements ProductAdapter.Listener 
         return mView;
     }
 
-    public void init(){
+    public void init() {
         listProducts = new ArrayList();
-        searchRcv = mView.findViewById(R.id.searchRcv);
         searchInput = mView.findViewById(R.id.search_input);
         productRcv = mView.findViewById(R.id.searchRcv);
+        notFoundText = mView.findViewById(R.id.not_found_text);
+        radioLowToHigh = mView.findViewById(R.id.radio_low_to_high);
+        radioHighToLow = mView.findViewById(R.id.radio_high_to_low);
+        radioPriceGroup = mView.findViewById(R.id.radio_price_group);
+        descendingState = "true";
+        ascendingState = "false";
+
+        radioPriceGroup = mView.findViewById(R.id.radio_price_group);
+        radioPriceGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == R.id.radio_low_to_high) {
+                    searchApi(searchInput.getText().toString(), "true", "false");
+                }
+                if (i == R.id.radio_high_to_low) {
+                    searchApi(searchInput.getText().toString(), "false", "true");
+                }
+            }
+        });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         productRcv.setLayoutManager(gridLayoutManager);
-        productAdapter = new ProductAdapter(getContext(),listProducts, this::onClick);
+        productAdapter = new ProductAdapter(getContext(), listProducts, this::onClick);
         productRcv.setAdapter(productAdapter);
+        getAllCollection();
         searchInput.addTextChangedListener(new TextWatcher() {
+            private Timer timer = new Timer();
+            private final long DELAY = 300; // Milliseconds
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -71,18 +103,58 @@ public class SearchFragment extends Fragment implements ProductAdapter.Listener 
 
             @Override
             public void afterTextChanged(Editable editable) {
-                ApiService.apiService.search(editable.toString()).enqueue(new Callback<List<Product>>() {
-                    @Override
-                    public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                timer.cancel();
+                timer = new Timer();
+                timer.schedule(
+                        new TimerTask() {
+                            @Override
+                            public void run() {
+                                if (radioLowToHigh.isChecked()) {
+                                    searchApi(editable.toString(), "true", "false");
+                                }
+                                if (radioHighToLow.isChecked()) {
+                                    searchApi(editable.toString(), "false", "true");
+                                }
+                            }
+                        },
+                        DELAY
+                );
+            }
+        });
+    }
+
+    public void searchApi(String searchString, String ascendingState, String descendingState) {
+        ApiService.apiService.search(searchString, ascendingState, descendingState).enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body().size() < 1) {
+                        getAllCollection();
+                    } else {
                         productAdapter.setList(response.body());
-                        productAdapter.notifyDataSetChanged();
                     }
+                }
+            }
 
-                    @Override
-                    public void onFailure(Call<List<Product>> call, Throwable t) {
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                Toast.makeText(getContext(), "Something wrong ~!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-                    }
-                });
+    public void getAllCollection() {
+        ApiService.apiService.getAllProduct().enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    productAdapter.setList(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+
             }
         });
     }

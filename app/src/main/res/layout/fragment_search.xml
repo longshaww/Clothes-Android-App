@@ -18,10 +18,36 @@
         android:padding="15dp"
         android:hint="Search"
         android:background="@drawable/search_view"/>
-
+    <RadioGroup
+        android:id="@+id/radio_price_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/radio_low_to_high"
+            android:text="Giá từ thấp đến cao"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/radio_high_to_low"
+            android:text="Giá từ cao đến thấp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchRcv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/not_found_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_gravity="center"
+        />
+
 
 </LinearLayout>

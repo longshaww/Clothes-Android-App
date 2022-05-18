@@ -106,7 +106,7 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
         List<SlideModel> slideModels = new ArrayList<>();
-        System.out.println(product.getImageList()[0]);
+
         slideModels.add(new SlideModel("https://" + product.getImageList()[0]));
         slideModels.add(new SlideModel("https://" + product.getImageList()[1]));
         imageSlider.setImageList(slideModels, true);

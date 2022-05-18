@@ -28,7 +28,7 @@ public interface ApiService {
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://95.111.203.4:4000/")
+            .baseUrl("http://192.168.20.59:4000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
@@ -37,7 +37,7 @@ public interface ApiService {
     Call<List<Product>> getAllProduct();
 
     @GET("search")
-    Call<List<Product>> search(@Query("q") String nameProduct);
+    Call<List<Product>> search(@Query("q") String nameProduct, @Query("ascending") String ascending,@Query("descending") String descending);
 
     @GET("collections/tops-without-pag")
     Call<List<Product>> getTops();
