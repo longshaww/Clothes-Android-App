@@ -22,6 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.Activity.DetailActivity;
+import vn.edu.huflit.clothes.Activity.PaymentActivity;
 import vn.edu.huflit.clothes.Adapter.CartAdapter;
 import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.CartHelper;
@@ -38,6 +39,7 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
     RecyclerView newArrivalsRcv;
     ProductAdapter productAdapter;
     CartHelper cartHelper;
+    Button btnCheckOut;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
     private void init() {
         subTotalPrice = mView.findViewById(R.id.subTotalPrice);
         totalPrice = mView.findViewById(R.id.totalPrice);
+        btnCheckOut = mView.findViewById(R.id.button_check_out);
+        btnCheckOut.setOnClickListener(this::onCheckoutClick);
         cartHelper = new CartHelper(getContext());
         Double sub = cartHelper.getAllProductCart().stream().mapToDouble(cart -> cart.getPrice() * cart.getQty()).sum();
         Double total = sub + 35;
@@ -73,6 +77,7 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
         initCartRcv();
         initNewArrivalsRcv();
     }
+
 
     public void initCartRcv(){
         CartHelper cartHelper = new CartHelper(getContext());
@@ -106,6 +111,11 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
                 Toast.makeText(getContext(), "Something wrong ~!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void onCheckoutClick(View view){
+        Intent intent = new Intent(getContext(), PaymentActivity.class);
+        startActivity(intent);
     }
 
     public void onClick(Product product) {

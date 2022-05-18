@@ -1,5 +1,6 @@
 package vn.edu.huflit.clothes.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
+import vn.edu.huflit.clothes.Activity.DetailActivity;
 import vn.edu.huflit.clothes.Activity.TopActivity;
 import vn.edu.huflit.clothes.Adapter.CartAdapter;
 import vn.edu.huflit.clothes.Adapter.ProductAdapter;
@@ -67,8 +69,8 @@ public class SearchFragment extends Fragment implements ProductAdapter.Listener 
         radioLowToHigh = mView.findViewById(R.id.radio_low_to_high);
         radioHighToLow = mView.findViewById(R.id.radio_high_to_low);
         radioPriceGroup = mView.findViewById(R.id.radio_price_group);
-        descendingState = "true";
-        ascendingState = "false";
+        descendingState = "false";
+        ascendingState = "true";
 
         radioPriceGroup = mView.findViewById(R.id.radio_price_group);
         radioPriceGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -86,7 +88,8 @@ public class SearchFragment extends Fragment implements ProductAdapter.Listener 
         productRcv.setLayoutManager(gridLayoutManager);
         productAdapter = new ProductAdapter(getContext(), listProducts, this::onClick);
         productRcv.setAdapter(productAdapter);
-        getAllCollection();
+        searchApi(null, ascendingState, descendingState);
+
         searchInput.addTextChangedListener(new TextWatcher() {
             private Timer timer = new Timer();
             private final long DELAY = 300; // Milliseconds
@@ -128,11 +131,7 @@ public class SearchFragment extends Fragment implements ProductAdapter.Listener 
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    if (response.body().size() < 1) {
-                        getAllCollection();
-                    } else {
-                        productAdapter.setList(response.body());
-                    }
+                    productAdapter.setList(response.body());
                 }
             }
 
@@ -143,24 +142,11 @@ public class SearchFragment extends Fragment implements ProductAdapter.Listener 
         });
     }
 
-    public void getAllCollection() {
-        ApiService.apiService.getAllProduct().enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.isSuccessful()) {
-                    productAdapter.setList(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-
-            }
-        });
-    }
 
     @Override
     public void onClick(Product product) {
-
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra("idProduct", product.get_id());
+        startActivity(intent);
     }
 }

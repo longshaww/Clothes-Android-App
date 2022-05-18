@@ -63,6 +63,5 @@ public class TopActivity extends AppCompatActivity implements ProductAdapter.Lis
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("idProduct", product.get_id());
         startActivity(intent);
-
     }
 }
