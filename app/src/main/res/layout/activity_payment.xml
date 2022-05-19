@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f5f5f5"
     tools:context=".Activity.PaymentActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -27,34 +28,22 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtTitlePayment"
+                android:id="@+id/cartCountCheckout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
-                android:text="GIAO HÀNG VÀO NGÀY 17 THÁNG 5 - NGÀY 26 THÁNG 5"
-                android:textAlignment="textStart"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="1 ITEMS"
+                android:textSize="16dp" />
 
-            <TextView
-                android:id="@+id/textView2"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/checkoutRcv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:text="1 ITEMS" />
+                android:layout_marginTop="16dp" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="130dp"
-                android:layout_height="180dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/outerwear" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,7 +63,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textview11"
+                    android:id="@+id/date_delivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -92,7 +81,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textview12"
+                    android:id="@+id/name_checkout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -103,7 +92,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textview13"
+                    android:id="@+id/address_checkout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -114,29 +103,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textview14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="QUẬN 8 HỒ CHÍ MINH"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/textview15"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="VIỆT NAM"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/textview16"
+                    android:id="@+id/phone_checkout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -158,7 +125,7 @@
                     android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="16dp"
-                    android:background="@drawable/visa_logo" />
+                    android:background="@drawable/ship_cod" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -172,7 +139,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="6dp"
                         android:layout_marginEnd="16dp"
-                        android:text="PHAM DANG KHOA"
+                        android:text="Hình thức thanh toán"
                         android:textColor="@color/black"
                         android:textSize="17sp"
                         android:textStyle="bold"
@@ -185,7 +152,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="16dp"
-                        android:text="400"
+                        android:text="COD"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:visibility="visible" />
@@ -206,13 +173,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Items Total:"
+                    android:text="Sub Total"
                     android:textColor="#373b54"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtTotalFee"
+                    android:id="@+id/sub_total_checkout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0.0"
@@ -235,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Delivery Services:"
+                    android:text="Shipping"
                     android:textColor="#373b54"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -243,45 +210,13 @@
                 "/>
 
                 <TextView
-                    android:id="@+id/txtTotal"
+                    android:id="@+id/shipping_checkout"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$0.0"
+                    android:layout_height="match_parent"
+                    android:text="35.000 VNĐ"
                     android:textColor="#373b54"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="4dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/txtTax"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Tax:"
-                    android:textColor="#373b54"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                "/>
-
-                <TextView
-                    android:id="@+id/txtTaxNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$0.0"
-                    android:textColor="#373b54"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -294,7 +229,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -303,10 +237,9 @@
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
-                "/>
 
                 <TextView
-                    android:id="@+id/TaxTxt"
+                    android:id="@+id/total_checkout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0.0"
@@ -315,16 +248,16 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView3"
+            <Button
+                android:id="@+id/confirm_button_checkout"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_margin="16dp"
                 android:background="@drawable/border_btn_checkout"
                 android:gravity="center"
-                android:text="Allow Payment"
+                android:text="Hoàn tất"
                 android:textColor="#ffffff"
-                android:textSize="25dp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
         </LinearLayout>
 

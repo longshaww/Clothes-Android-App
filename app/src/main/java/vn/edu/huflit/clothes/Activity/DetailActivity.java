@@ -103,6 +103,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CartHelper cartHelper = new CartHelper(getBaseContext());
                 cartHelper.insertCart(product.get_id(), product.getImageList()[0], product.getNameProduct(), product.getPrice(), product.getDescription(), onCheckedChange(), "1", product.getPrice());
+                Toast.makeText(DetailActivity.this, "Đã thêm vào giỏ hàng !", Toast.LENGTH_SHORT).show();
             }
         });
         List<SlideModel> slideModels = new ArrayList<>();

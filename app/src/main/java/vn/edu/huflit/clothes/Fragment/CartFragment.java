@@ -81,7 +81,7 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
 
     public void initCartRcv(){
         CartHelper cartHelper = new CartHelper(getContext());
-        cartAdapter = new CartAdapter(getContext(), cartHelper.getAllProductCart(), this::onClick,this::updateCartTotal);
+        cartAdapter = new CartAdapter(getContext(), cartHelper.getAllProductCart(), this::onClick,this::updateCartTotal,false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rcvCart.setAdapter(cartAdapter);
         rcvCart.setLayoutManager(linearLayoutManager);
@@ -115,6 +115,8 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
 
     public void onCheckoutClick(View view){
         Intent intent = new Intent(getContext(), PaymentActivity.class);
+        intent.putExtra("subTotal",subTotalPrice.getText().toString());
+        intent.putExtra("total",totalPrice.getText().toString());
         startActivity(intent);
     }
 

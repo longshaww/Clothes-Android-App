@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_marginRight="10dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image_checkout_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:background="@color/black"
+        android:id="@+id/qty_checkout_cart"
+        android:layout_gravity="bottom|end"
+        android:paddingHorizontal="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:text="1" />
+</FrameLayout>

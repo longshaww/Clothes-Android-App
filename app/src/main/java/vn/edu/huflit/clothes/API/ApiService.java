@@ -14,6 +14,8 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import vn.edu.huflit.clothes.models.Bill;
+import vn.edu.huflit.clothes.models.BillDTO;
 import vn.edu.huflit.clothes.models.Product;
 import vn.edu.huflit.clothes.models.User;
 import vn.edu.huflit.clothes.models.UserLoginDTO;
@@ -28,7 +30,7 @@ public interface ApiService {
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://95.111.203.4:4000/")
+            .baseUrl("http:/192.168.20.59:4000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
@@ -53,4 +55,7 @@ public interface ApiService {
 
     @POST("authCookie/register")
     Call<User> register(@Body UserRegisterDTO user);
+
+    @POST("bill")
+    Call<Bill> postBill(@Body BillDTO bill);
 }

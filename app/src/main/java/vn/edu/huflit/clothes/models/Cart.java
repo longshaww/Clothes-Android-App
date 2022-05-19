@@ -1,22 +1,39 @@
 package vn.edu.huflit.clothes.models;
 
 public class Cart {
-    private String id;
+    private String _id;
     private String image;
     private String name;
     private int price;
     private String description;
     private String size;
     private int qty;
-    private int total;
+    private int sum;
 
-
-    public String getId() {
-        return id;
+    public Cart(String _id, String image, String name, int price, String description, String size, int qty, int sum) {
+        this._id = _id;
+        this.image = image;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.size = size;
+        this.qty = qty;
+        this.sum = sum;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Cart(String _id, String size, int qty, int sum) {
+        this._id = _id;
+        this.size = size;
+        this.qty = qty;
+        this.sum = sum;
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String _id) {
+        this._id = _id;
     }
 
     public String getImage() {
@@ -67,22 +84,13 @@ public class Cart {
         this.qty = qty;
     }
 
-    public int getTotal() {
-        return total;
+    public int getSum() {
+        return sum;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setSum(int sum) {
+        this.sum = sum;
     }
 
-    public Cart(String id, String image, String name, int price, String description, String size, int qty, int total) {
-        this.id = id;
-        this.image = image;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.size = size;
-        this.qty = qty;
-        this.total = total;
-    }
+
 }

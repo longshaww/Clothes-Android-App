@@ -96,8 +96,5 @@ public class AccountFragment extends Fragment {
         if (user.getAvatar() != null) {
             Picasso.get().load(user.getAvatar()).into(avatarAccount);
         }
-
     }
-
-
 }
