@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_detail"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scrollbars="none"
@@ -38,111 +38,96 @@
             app:cardCornerRadius="16dp"
             app:cardElevation="24dp">
 
-
-            <TextView
-                android:id="@+id/txtPriceDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:text="$400"
-                android:textColor="@color/black"
-                android:textSize="30dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtNameDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="60dp"
-                android:text="sandro paris"
-                android:textColor="@color/black"
-                android:textSize="26dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtOverviewDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginEnd="24dp"
-                android:text="@string/appbar_scrolling_view_behavior"
-                android:textColor="@color/black"
-                android:textSize="18dp" />
-
             <LinearLayout
-                android:id="@+id/rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="160dp"
-                android:layout_marginEnd="24dp"
-                android:orientation="horizontal"
-                >
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginHorizontal="20dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/txtPriceDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="$400"
+                    android:textColor="@color/black"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtNameDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="sandro paris"
+                    android:textColor="@color/black"
+                    android:textSize="26dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtOverviewDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/appbar_scrolling_view_behavior"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
 
                 <RadioGroup
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    >
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/radio_M"
-                        android:text="M"
-                        android:checked="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="M" />
 
                     <RadioButton
                         android:id="@+id/radio_L"
-                        android:text="L"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="L" />
 
                     <RadioButton
                         android:id="@+id/radio_XL"
-                        android:text="XL"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:text="XL" />
                 </RadioGroup>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addToCartBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border"
+                            android:backgroundTint="@color/black"
+                            android:text="add to cart"
+                            android:textColor="@color/white"
+                            android:layout_columnWeight="1"
+                            android:textSize="18dp" />
+
+                        <ImageView
+                            android:id="@+id/shopping_cart_detail"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_toRightOf="@id/addToCartBtn"
+                            android:src="@drawable/ic_baseline_shopping_cart_24"/>
+                    </GridLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
-
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="24dp"-->
-<!--                android:layout_marginTop="205dp"-->
-<!--                android:layout_marginEnd="24dp">-->
-
-
-<!--                <AutoCompleteTextView-->
-<!--                    android:id="@+id/autoCompleteTextView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:background="@drawable/border"-->
-<!--                    android:text="AutoCompleteTextView" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/addToCartBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="275dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/border"
-                android:backgroundTint="@color/black"
-                android:text="add to cart"
-                android:textColor="@color/white"
-                android:textSize="18dp"/>
-
         </androidx.cardview.widget.CardView>
-
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -101,8 +102,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     Integer increaseQty = Integer.parseInt(holder.productQty.getText().toString()) + 1;
                     holder.productQty.setText(Integer.toString(increaseQty));
                     Integer getTotal = cart.getPrice() * Integer.parseInt(holder.productQty.getText().toString());
-                    holder.productTotal.setText(Integer.toString(getTotal));
-                    cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(), holder.productTotal.getText().toString());
+                    cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(),getTotal.toString());
                     updateResult();
                 }
             });
@@ -117,8 +117,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         holder.productQty.setText(Integer.toString(decreaseQty));
                     }
                     Integer getTotal = cart.getPrice() * Integer.parseInt(holder.productQty.getText().toString());
-                    holder.productTotal.setText(Integer.toString(getTotal));
-                    cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(), holder.productTotal.getText().toString());
+                    cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(), getTotal.toString());
                     updateResult();
                 }
             });
@@ -166,5 +165,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public interface UpdateTotal {
         void updateCartTotal(String subTotal, String total);
     }
+
+
 
 }

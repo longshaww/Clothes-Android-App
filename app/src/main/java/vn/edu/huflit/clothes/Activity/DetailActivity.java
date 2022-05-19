@@ -1,5 +1,6 @@
 package vn.edu.huflit.clothes.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -107,7 +109,6 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
         List<SlideModel> slideModels = new ArrayList<>();
-
         slideModels.add(new SlideModel("https://" + product.getImageList()[0]));
         slideModels.add(new SlideModel("https://" + product.getImageList()[1]));
         imageSlider.setImageList(slideModels, true);

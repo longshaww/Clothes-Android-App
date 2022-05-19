@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,17 +32,16 @@ import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Cart;
 import vn.edu.huflit.clothes.models.Product;
 
-public class CartFragment extends Fragment implements CartAdapter.Listener , CartAdapter.UpdateTotal{
+public class CartFragment extends Fragment implements CartAdapter.Listener, CartAdapter.UpdateTotal {
     private View mView;
     RecyclerView rcvCart;
     CartAdapter cartAdapter;
-    TextView subTotalPrice,totalPrice;
+    TextView subTotalPrice, totalPrice;
     ArrayList listNewArrivals;
     RecyclerView newArrivalsRcv;
     ProductAdapter productAdapter;
     CartHelper cartHelper;
     Button btnCheckOut;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,7 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
         super.onResume();
         CartHelper cartHelper = new CartHelper(getContext());
         cartAdapter.setList(cartHelper.getAllProductCart());
+        checkCartUpdate();
     }
 
     @Override
@@ -68,39 +70,42 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
         btnCheckOut = mView.findViewById(R.id.button_check_out);
         btnCheckOut.setOnClickListener(this::onCheckoutClick);
         cartHelper = new CartHelper(getContext());
-        Double sub = cartHelper.getAllProductCart().stream().mapToDouble(cart -> cart.getPrice() * cart.getQty()).sum();
-        Double total = sub + 35;
-        subTotalPrice.setText(sub.toString()+"00 VNĐ");
-        totalPrice.setText(total.toString()+"00 VNĐ ");
+        checkCartUpdate();
         rcvCart = mView.findViewById(R.id.rcvCart);
         newArrivalsRcv = mView.findViewById(R.id.cartNewArrivalsRcv);
         initCartRcv();
         initNewArrivalsRcv();
     }
 
+    public void checkCartUpdate() {
+        Double sub = cartHelper.getAllProductCart().stream().mapToDouble(cart -> cart.getPrice() * cart.getQty()).sum();
+        Double total = sub + 35;
+        subTotalPrice.setText(sub.toString() + "00 VNĐ");
+        totalPrice.setText(total.toString() + "00 VNĐ ");
+    }
 
-    public void initCartRcv(){
+    public void initCartRcv() {
         CartHelper cartHelper = new CartHelper(getContext());
-        cartAdapter = new CartAdapter(getContext(), cartHelper.getAllProductCart(), this::onClick,this::updateCartTotal,false);
+        cartAdapter = new CartAdapter(getContext(), cartHelper.getAllProductCart(), this::onClick, this::updateCartTotal, false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         rcvCart.setAdapter(cartAdapter);
         rcvCart.setLayoutManager(linearLayoutManager);
     }
 
-    public void initNewArrivalsRcv(){
+    public void initNewArrivalsRcv() {
         listNewArrivals = new ArrayList();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         newArrivalsRcv.setLayoutManager(linearLayoutManager);
-        productAdapter = new ProductAdapter(getContext(), listNewArrivals,this::onClick);
+        productAdapter = new ProductAdapter(getContext(), listNewArrivals, this::onClick);
         newArrivalsRcv.setAdapter(productAdapter);
         getNewArrival();
     }
 
-    public void getNewArrival(){
+    public void getNewArrival() {
         ApiService.apiService.getNewArrivals().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     productAdapter.setList(response.body());
                     productAdapter.notifyDataSetChanged();
                 }
@@ -113,11 +118,15 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
         });
     }
 
-    public void onCheckoutClick(View view){
-        Intent intent = new Intent(getContext(), PaymentActivity.class);
-        intent.putExtra("subTotal",subTotalPrice.getText().toString());
-        intent.putExtra("total",totalPrice.getText().toString());
-        startActivity(intent);
+    public void onCheckoutClick(View view) {
+        if (cartAdapter.cartCount() < 1) {
+            Toast.makeText(getContext(), "Your cart is empty", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(getContext(), PaymentActivity.class);
+            intent.putExtra("subTotal", subTotalPrice.getText().toString());
+            intent.putExtra("total", totalPrice.getText().toString());
+            startActivity(intent);
+        }
     }
 
     public void onClick(Product product) {
@@ -135,8 +144,8 @@ public class CartFragment extends Fragment implements CartAdapter.Listener , Car
     }
 
     @Override
-    public void updateCartTotal(String subTotal,String total) {
-        subTotalPrice.setText(subTotal +"00 VNĐ");
+    public void updateCartTotal(String subTotal, String total) {
+        subTotalPrice.setText(subTotal + "00 VNĐ");
         totalPrice.setText(total + "00 VNĐ");
     }
 }

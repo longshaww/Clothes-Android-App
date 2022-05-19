@@ -118,7 +118,11 @@ public class CartHelper {
         db.update("tblCart",contentValues,"ID= ? ",new String[]{_id});
     }
     public int cartCount(){
-       return getAllProductCart().stream().mapToInt(cart -> cart.getQty()).sum();
+       int cartCount = getAllProductCart().stream().mapToInt(cart -> cart.getQty()).sum();
+       if(cartCount <1){
+           return 0;
+       }
+       return cartCount;
     }
 
     public void clearCart(){
