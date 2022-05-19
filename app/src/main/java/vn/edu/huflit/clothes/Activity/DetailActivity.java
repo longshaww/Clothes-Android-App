@@ -36,6 +36,7 @@ import vn.edu.huflit.clothes.Adapter.CartAdapter;
 import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.CartHelper;
 import vn.edu.huflit.clothes.Fragment.CartFragment;
+import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Cart;
 import vn.edu.huflit.clothes.models.Product;
@@ -106,6 +107,7 @@ public class DetailActivity extends AppCompatActivity {
                 CartHelper cartHelper = new CartHelper(getBaseContext());
                 cartHelper.insertCart(product.get_id(), product.getImageList()[0], product.getNameProduct(), product.getPrice(), product.getDescription(), onCheckedChange(), "1", product.getPrice());
                 Toast.makeText(DetailActivity.this, "Đã thêm vào giỏ hàng !", Toast.LENGTH_SHORT).show();
+                MainActivity.bottomNavigationView.getOrCreateBadge(R.id.navigation_cart).setNumber(cartHelper.cartCount());
             }
         });
         List<SlideModel> slideModels = new ArrayList<>();

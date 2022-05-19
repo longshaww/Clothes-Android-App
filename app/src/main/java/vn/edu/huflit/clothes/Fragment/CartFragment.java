@@ -28,6 +28,7 @@ import vn.edu.huflit.clothes.Activity.PaymentActivity;
 import vn.edu.huflit.clothes.Adapter.CartAdapter;
 import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.CartHelper;
+import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Cart;
 import vn.edu.huflit.clothes.models.Product;
@@ -147,5 +148,6 @@ public class CartFragment extends Fragment implements CartAdapter.Listener, Cart
     public void updateCartTotal(String subTotal, String total) {
         subTotalPrice.setText(subTotal + "00 VNĐ");
         totalPrice.setText(total + "00 VNĐ");
+        MainActivity.bottomNavigationView.getOrCreateBadge(R.id.navigation_cart).setNumber(cartAdapter.cartCount());
     }
 }

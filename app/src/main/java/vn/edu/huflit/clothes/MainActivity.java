@@ -19,16 +19,16 @@ import vn.edu.huflit.clothes.API.ApiController;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
-    private BottomNavigationView bottomNavigationView;
+    public static BottomNavigationView bottomNavigationView;
     SharedPreferences sharedPreferences;
+    CartHelper cartHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cartHelper = new CartHelper(getApplicationContext());
         sharedPreferences = getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
-
-
         if (sharedPreferences.getString("user", null) == null || sharedPreferences.getString("userCookie", null) == null) {
             Intent intent = new Intent(MainActivity.this, SigninActivity.class);
             startActivity(intent);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        bottomNavigationView.getOrCreateBadge(R.id.navigation_cart).setNumber(cartHelper.cartCount());
     }
-
 }
 
