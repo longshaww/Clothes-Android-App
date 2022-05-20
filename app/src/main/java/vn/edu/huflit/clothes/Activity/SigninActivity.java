@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
@@ -40,7 +41,7 @@ public class SigninActivity extends AppCompatActivity {
     EditText passwordInput;
     SharedPreferences sharedPref;
     Gson gson;
-
+    LinearProgressIndicator loadingSignIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +64,14 @@ public class SigninActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.password_input);
 
         sharedPref = getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
-
+        loadingSignIn = findViewById(R.id.loading_sign_in);
         gson = new Gson();
         checkLogin();
     }
 
     public void checkLogin(){
         if (sharedPref.getString("user", null) != null && sharedPref.getString("userCookie", null) != null) {
+            loadingSignIn.setVisibility(View.INVISIBLE);
             Intent intent = new Intent(SigninActivity.this, MainActivity.class);
             startActivity(intent);
         }
@@ -85,6 +87,7 @@ public class SigninActivity extends AppCompatActivity {
         String getEmail = emailInput.getText().toString();
         String getPassword = passwordInput.getText().toString();
         UserLoginDTO user = new UserLoginDTO(getEmail, getPassword);
+        loadingSignIn.setVisibility(View.VISIBLE);
         requestLogin(user);
     }
 

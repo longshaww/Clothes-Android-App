@@ -129,6 +129,13 @@
                 android:padding="20dp"
                 android:text="@string/text_signin_signup"
                 android:textColor="@color/black" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/loading_sign_in"
+                android:visibility="invisible"
+                android:indeterminate="true" />
         </LinearLayout>
 
     </RelativeLayout>

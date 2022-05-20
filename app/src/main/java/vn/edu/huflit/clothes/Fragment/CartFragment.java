@@ -43,6 +43,7 @@ public class CartFragment extends Fragment implements CartAdapter.Listener, Cart
     ProductAdapter productAdapter;
     CartHelper cartHelper;
     Button btnCheckOut;
+    public static View cartFragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class CartFragment extends Fragment implements CartAdapter.Listener, Cart
     }
 
     private void init() {
+        cartFragment = mView.findViewById(R.id.cart_fragment);
         subTotalPrice = mView.findViewById(R.id.subTotalPrice);
         totalPrice = mView.findViewById(R.id.totalPrice);
         btnCheckOut = mView.findViewById(R.id.button_check_out);

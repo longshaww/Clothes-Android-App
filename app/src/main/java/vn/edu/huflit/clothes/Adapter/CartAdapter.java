@@ -11,11 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import vn.edu.huflit.clothes.CartHelper;
+import vn.edu.huflit.clothes.Fragment.CartFragment;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Cart;
 
@@ -28,7 +30,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private UpdateTotal updateTotal;
     private Boolean useCheckoutLayout;
 
-    public CartAdapter(Context context, List<Cart> list, CartAdapter.Listener listener, UpdateTotal updateTotal,Boolean useCheckoutLayout) {
+    public CartAdapter(Context context, List<Cart> list, CartAdapter.Listener listener, UpdateTotal updateTotal, Boolean useCheckoutLayout) {
         this.list = list;
         this.context = context;
         this.listener = listener;
@@ -36,7 +38,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         this.updateTotal = updateTotal;
         this.useCheckoutLayout = useCheckoutLayout;
     }
-
 
     public List<Cart> getList() {
         return list;
@@ -94,6 +95,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     list = cartHelper.getAllProductCart();
                     notifyDataSetChanged();
                     updateResult();
+                    Snackbar.make(CartFragment.cartFragment, "Đã xoá sản phẩm khỏi giỏ hàng"
+                            , Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    }).show();
                 }
             });
             holder.increaseBtn.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +110,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     Integer increaseQty = Integer.parseInt(holder.productQty.getText().toString()) + 1;
                     holder.productQty.setText(Integer.toString(increaseQty));
                     Integer getTotal = cart.getPrice() * Integer.parseInt(holder.productQty.getText().toString());
-                    cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(),getTotal.toString());
+                    cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(), getTotal.toString());
                     updateResult();
                 }
             });
@@ -124,7 +132,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         }
     }
 
-    public int cartCount(){
+    public int cartCount() {
         int count = cartHelper.cartCount();
         return count;
     }
@@ -140,7 +148,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView productImage, deleteCartBtn, increaseBtn, decreaseBtn, productCheckOutImage;
-        private TextView productName, productSize, productTotal, productQty, totalPrice,qtyCheckOutText;
+        private TextView productName, productSize, productTotal, productQty, totalPrice, qtyCheckOutText;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -165,7 +173,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public interface UpdateTotal {
         void updateCartTotal(String subTotal, String total);
     }
-
 
 
 }

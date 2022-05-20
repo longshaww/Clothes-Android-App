@@ -1,11 +1,13 @@
 package vn.edu.huflit.clothes.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
@@ -42,7 +45,7 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     Toolbar toolbar;
     RecyclerView checkoutRcv;
     CartAdapter cartAdapter;
-    TextView cartCount, nameCheckout, addressCheckout, phoneCheckout, dateDelivery,subTotalPrice,totalPrice;
+    TextView cartCount, nameCheckout, addressCheckout, phoneCheckout, dateDelivery, subTotalPrice, totalPrice;
     SharedPreferences sharedPreferences;
     CartHelper cartHelper;
     Gson gson;
@@ -131,21 +134,31 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
         startActivity(intent);
     }
 
-    public void onConfirmCheckout(View view){
+    public void onConfirmCheckout(View view) {
         User user = handleSharePreferences();
-        BillDTO bill = new BillDTO(user.getName(),user.email,user.getPhoneNumber(),user.getAddress(),"COD",cartHelper.responseProducts());
-        sendBill(bill);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        BillDTO bill = new BillDTO(user.getName(), user.email, user.getPhoneNumber(), user.getAddress(), "COD", cartHelper.responseProducts());
+        new AlertDialog.Builder(this)
+                .setTitle("Confirmation")
+                .setMessage("Bạn đã kiểm tra thông tin chưa ?")
+                .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        sendBill(bill);
+                        Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                }).setCancelable(true)
+                .setNegativeButton("Thoát", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
 
-    public void sendBill(BillDTO bill){
+    public void sendBill(BillDTO bill) {
         ApiService.apiService.postBill(bill).enqueue(new Callback<Bill>() {
             @Override
             public void onResponse(Call<Bill> call, Response<Bill> response) {
-                    Toast.makeText(PaymentActivity.this, "Hoàn tất", Toast.LENGTH_SHORT).show();
-                    cartHelper.clearCart();
+                Toast.makeText(PaymentActivity.this, "Hoàn tất", Toast.LENGTH_SHORT).show();
+                cartHelper.clearCart();
             }
 
             @Override
