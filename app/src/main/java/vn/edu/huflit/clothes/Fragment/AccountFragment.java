@@ -4,16 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -21,18 +28,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vn.edu.huflit.clothes.API.ApiService;
+import vn.edu.huflit.clothes.Activity.ChangePasswordActivity;
 import vn.edu.huflit.clothes.Activity.SigninActivity;
 import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
+import vn.edu.huflit.clothes.models.Customer;
+import vn.edu.huflit.clothes.models.UpdateAddressPhoneNumberDTO;
 import vn.edu.huflit.clothes.models.User;
 
 public class AccountFragment extends Fragment {
     private View mView;
-    Button logoutBtn;
+    Button logoutBtn, updateAddressPhoneBtn, changePasswordBtn;
     SharedPreferences sharedPreferences;
     Gson gson;
-    EditText nameAccount,emailAccount,phoneAccount,addressAccount;
+    TextInputLayout phoneAccount, addressAccount;
+    TextView nameAccount, emailAccount;
     CircleImageView avatarAccount;
+    LinearProgressIndicator loadingUpdateAccount;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,53 +66,93 @@ public class AccountFragment extends Fragment {
     }
 
     public void init() {
-        sharedPreferences = this.getActivity().getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
+        sharedPreferences = getContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
         gson = new Gson();
         logoutBtn = mView.findViewById(R.id.logout_btn);
-
+        updateAddressPhoneBtn = mView.findViewById(R.id.btn_update_address_phone_account);
+        changePasswordBtn = mView.findViewById(R.id.btn_change_password_account);
         nameAccount = mView.findViewById(R.id.name_account);
         emailAccount = mView.findViewById(R.id.email_account);
         phoneAccount = mView.findViewById(R.id.phone_account);
-        addressAccount = mView.findViewById(R.id.addess_account);
+        addressAccount = mView.findViewById(R.id.address_account);
         avatarAccount = mView.findViewById(R.id.avatar_account);
-
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                for (String key : sharedPreferences.getAll().keySet()) {
-                    if (key.startsWith("user")) {
-                        editor.remove(key);
-                    }
-                    if (key.startsWith("userCookie")) {
-                        editor.remove(key);
-                    }
-                }
-                editor.commit();
-                if (sharedPreferences.getString("user", null) == null || sharedPreferences.getString("userCookie", null) == null) {
-                    Intent intent = new Intent(getActivity().getBaseContext(), SigninActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-        handleSharePreferences();
+        loadingUpdateAccount = mView.findViewById(R.id.loading_update_account);
+        logoutBtn.setOnClickListener(this::onLogOutClick);
+        updateAddressPhoneBtn.setOnClickListener(this::onUpdateAddressPhoneClick);
+        changePasswordBtn.setOnClickListener(this::onChangePasswordClick);
+        setTextToView();
     }
 
-    public void handleSharePreferences() {
-        String userJSON = sharedPreferences.getString("user", "0");//second parameter is necessary ie.,Value to return if this preference does not exist.
-        if (userJSON != null) {
-            User user = gson.fromJson(userJSON, User.class);
-            setTextToView(user);
-        }
-    }
-
-    public void setTextToView(User user) {
+    public void setTextToView() {
+        User user = GetUserSharePreferences.handleSharePreferences(getContext());
         nameAccount.setText(user.getName());
         emailAccount.setText(user.getEmail());
-        phoneAccount.setText(user.getPhoneNumber());
-        addressAccount.setText(user.getAddress());
+        phoneAccount.getEditText().setText(user.getPhoneNumber());
+        addressAccount.getEditText().setText(user.getAddress());
         if (user.getAvatar() != null) {
             Picasso.get().load(user.getAvatar()).into(avatarAccount);
         }
+    }
+
+    public void onLogOutClick(View view) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        for (String key : sharedPreferences.getAll().keySet()) {
+            if (key.startsWith("user")) {
+                editor.remove(key);
+            }
+            if (key.startsWith("userCookie")) {
+                editor.remove(key);
+            }
+        }
+        editor.commit();
+        if (sharedPreferences.getString("user", null) == null || sharedPreferences.getString("userCookie", null) == null) {
+            Intent intent = new Intent(getActivity().getBaseContext(), SigninActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    public void onUpdateAddressPhoneClick(View view) {
+        String getAddress = addressAccount.getEditText().getText().toString();
+        String getPhone = phoneAccount.getEditText().getText().toString();
+        if(TextUtils.isEmpty(getAddress)){
+            addressAccount.setError("Please enter your address");
+        }
+        if(TextUtils.isEmpty(getPhone)){
+            phoneAccount.setError("Please enter your phone number");
+        }
+        if(!TextUtils.isEmpty(getAddress) && !TextUtils.isEmpty(getPhone)){
+            addressAccount.setError(null);
+            phoneAccount.setError(null);
+            loadingUpdateAccount.setVisibility(View.VISIBLE);
+            requestUpdateAddressPhone(getAddress, getPhone);
+        }
+    }
+
+    public void onChangePasswordClick(View view) {
+        Intent intent = new Intent(getContext(),ChangePasswordActivity.class);
+        startActivity(intent);
+    }
+
+    public void requestUpdateAddressPhone(String address, String phone) {
+        User user = GetUserSharePreferences.handleSharePreferences(getContext());
+        UpdateAddressPhoneNumberDTO updateAddressPhoneNumberDTO = new UpdateAddressPhoneNumberDTO(user.getID(), address, phone);
+        ApiService.apiService.updateAddressPhoneNumber(updateAddressPhoneNumberDTO).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User resUser = response.body();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("user", gson.toJson(resUser));
+                editor.commit();
+                loadingUpdateAccount.setVisibility(View.INVISIBLE);
+                Snackbar.make(mView, "Cập nhật thông tin thành công"
+                        , Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Snackbar.make(mView, "Cập nhật thất bại"
+                        , Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 }

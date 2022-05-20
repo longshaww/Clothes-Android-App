@@ -2,7 +2,7 @@ package vn.edu.huflit.clothes.models;
 
 import java.util.List;
 
-public class BillDTO {
+public class CreateBillDTO {
     private String nameCustomer;
     private String email;
     private String phoneNumber;
@@ -10,7 +10,7 @@ public class BillDTO {
     private String paymentMethod;
     private List<Cart> listProduct;
 
-    public BillDTO(String nameCustomer, String email, String phoneNumber, String address, String paymentMethod, List<Cart> listProduct) {
+    public CreateBillDTO(String nameCustomer, String email, String phoneNumber, String address, String paymentMethod, List<Cart> listProduct) {
         this.nameCustomer = nameCustomer;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -19,7 +19,7 @@ public class BillDTO {
         this.listProduct = listProduct;
     }
 
-    public BillDTO(){
+    public CreateBillDTO(){
 
     }
 
