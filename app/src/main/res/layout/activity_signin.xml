@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
+    android:id="@+id/sign_in_activity"
     tools:context=".Activity.SigninActivity">
 
     <RelativeLayout

@@ -96,12 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     notifyDataSetChanged();
                     updateResult();
                     Snackbar.make(CartFragment.cartFragment, "Đã xoá sản phẩm khỏi giỏ hàng"
-                            , Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                        }
-                    }).show();
+                            , Snackbar.LENGTH_LONG).show();
                 }
             });
             holder.increaseBtn.setOnClickListener(new View.OnClickListener() {

@@ -9,7 +9,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
@@ -28,6 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
+import vn.edu.huflit.clothes.Fragment.CartFragment;
 import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.User;
@@ -42,6 +46,8 @@ public class SigninActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     Gson gson;
     LinearProgressIndicator loadingSignIn;
+    View signInActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,7 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     public void init() {
+        signInActivity = findViewById(R.id.sign_in_activity);
         button_sign_up = findViewById(R.id.button_sign_up);
         button_sign_up.setOnClickListener(this::onClickSignUp);
 
@@ -69,7 +76,7 @@ public class SigninActivity extends AppCompatActivity {
         checkLogin();
     }
 
-    public void checkLogin(){
+    public void checkLogin() {
         if (sharedPref.getString("user", null) != null && sharedPref.getString("userCookie", null) != null) {
             loadingSignIn.setVisibility(View.INVISIBLE);
             Intent intent = new Intent(SigninActivity.this, MainActivity.class);
@@ -83,12 +90,20 @@ public class SigninActivity extends AppCompatActivity {
         finish();
     }
 
+    public static boolean isValidEmail(String target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+    }
     public void onClickSignIn(View v) {
-        String getEmail = emailInput.getText().toString();
-        String getPassword = passwordInput.getText().toString();
-        UserLoginDTO user = new UserLoginDTO(getEmail, getPassword);
-        loadingSignIn.setVisibility(View.VISIBLE);
-        requestLogin(user);
+        String getEmail = emailInput.getText().toString().trim();
+        String getPassword = passwordInput.getText().toString().trim();
+        if (isValidEmail(getEmail) && !TextUtils.isEmpty(getPassword)) {
+            UserLoginDTO user = new UserLoginDTO(getEmail, getPassword);
+            loadingSignIn.setVisibility(View.VISIBLE);
+            requestLogin(user);
+        } else {
+            Snackbar.make(signInActivity, "Đăng nhập thất bại !"
+                    , Snackbar.LENGTH_LONG).show();
+        }
     }
 
     public void requestLogin(UserLoginDTO user) {

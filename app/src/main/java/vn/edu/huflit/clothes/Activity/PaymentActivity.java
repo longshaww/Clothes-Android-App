@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -50,6 +51,7 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     CartHelper cartHelper;
     Gson gson;
     Button confirmCheckoutButton;
+    LinearProgressIndicator loadingCheckout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
         dateDelivery = findViewById(R.id.date_delivery);
         subTotalPrice = findViewById(R.id.sub_total_checkout);
         totalPrice = findViewById(R.id.total_checkout);
+        loadingCheckout = findViewById(R.id.loading_checkout);
         confirmCheckoutButton = findViewById(R.id.confirm_button_checkout);
         confirmCheckoutButton.setOnClickListener(this::onConfirmCheckout);
     }
@@ -142,6 +145,7 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
                 .setMessage("Bạn đã kiểm tra thông tin chưa ?")
                 .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        loadingCheckout.setVisibility(View.VISIBLE);
                         sendBill(bill);
                         Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
                         startActivity(intent);
@@ -159,6 +163,7 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
             public void onResponse(Call<Bill> call, Response<Bill> response) {
                 Toast.makeText(PaymentActivity.this, "Hoàn tất", Toast.LENGTH_SHORT).show();
                 cartHelper.clearCart();
+                loadingCheckout.setVisibility(View.INVISIBLE);
             }
 
             @Override

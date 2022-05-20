@@ -259,6 +259,12 @@
                 android:textColor="#ffffff"
                 android:textSize="16dp"
                 android:textStyle="bold" />
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/loading_checkout"
+                android:visibility="invisible"
+                android:indeterminate="true" />
         </LinearLayout>
 
     </ScrollView>
