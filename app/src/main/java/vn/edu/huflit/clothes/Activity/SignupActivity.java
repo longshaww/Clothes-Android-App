@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +28,7 @@ public class SignupActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     Button buttonSignUp;
-    TextInputEditText emailInput, nameInput, phoneInput, addressInput, passwordInput, confirmPasswordInput;
+    TextInputLayout emailInput, nameInput, phoneInput, addressInput, passwordInput, confirmPasswordInput;
     LinearProgressIndicator loadingSignUp;
     View sighUpActivity;
 
@@ -58,7 +59,7 @@ public class SignupActivity extends AppCompatActivity {
         buttonSignUp.setOnClickListener(this::onClickSignUp);
         emailInput = findViewById(R.id.et_email);
         nameInput = findViewById(R.id.et_name);
-        phoneInput = findViewById(R.id.et_address);
+        phoneInput = findViewById(R.id.et_phone);
         addressInput = findViewById(R.id.et_address);
         passwordInput = findViewById(R.id.et_password);
         confirmPasswordInput = findViewById(R.id.et_confirm_password);
@@ -66,20 +67,35 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onClickSignUp(View view) {
-        String getEmail = emailInput.getText().toString();
-        String getName = nameInput.getText().toString();
-        String getPhone = phoneInput.getText().toString();
-        String getAddress = addressInput.getText().toString();
-        String getPassword = passwordInput.getText().toString();
-        String getConfirmPassword = confirmPasswordInput.getText().toString();
+        String getEmail = emailInput.getEditText().getText().toString();
+        String getName = nameInput.getEditText().getText().toString();
+        String getPhone = phoneInput.getEditText().getText().toString();
+        String getAddress = addressInput.getEditText().getText().toString();
+        String getPassword = passwordInput.getEditText().getText().toString();
+        String getConfirmPassword = confirmPasswordInput.getEditText().getText().toString();
+        if(!SigninActivity.isValidEmail(getEmail)){
+            emailInput.setError("This is not email");
+        }
+        if(TextUtils.isEmpty(getName)){
+            nameInput.setError("Please enter your name");
+        }
+        if(TextUtils.isEmpty(getPhone)){
+            phoneInput.setError("Please enter your phone number");
+        }
+        if(TextUtils.isEmpty(getAddress)){
+            addressInput.setError("Please enter your address");
+        }
+        if(TextUtils.isEmpty(getPassword)){
+            passwordInput.setError("Please enter your password");
+        }
+        if(getAddress != getPassword){
+            confirmPasswordInput.setError("The password is not fit above");
+        }
         if (SigninActivity.isValidEmail(getEmail) && !TextUtils.isEmpty(getName) && !TextUtils.isEmpty(getPhone)
                 && !TextUtils.isEmpty(getAddress) && !TextUtils.isEmpty(getPassword) && !TextUtils.isEmpty(getConfirmPassword)) {
             UserRegisterDTO user = new UserRegisterDTO(getEmail, getName, getPhone, getPassword, getAddress);
             loadingSignUp.setVisibility(View.VISIBLE);
             requestRegister(user);
-        } else {
-            Snackbar.make(sighUpActivity, "Đăng ký thất bại !"
-                    , Snackbar.LENGTH_LONG).show();
         }
     }
 

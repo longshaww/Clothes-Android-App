@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -41,8 +42,7 @@ public class SigninActivity extends AppCompatActivity {
 
     Button button_sign_up, button_sign_in;
     Toolbar toolbar;
-    TextInputEditText emailInput;
-    EditText passwordInput;
+    TextInputLayout passwordInput, emailInput;
     SharedPreferences sharedPref;
     Gson gson;
     LinearProgressIndicator loadingSignIn;
@@ -94,15 +94,20 @@ public class SigninActivity extends AppCompatActivity {
         return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
     public void onClickSignIn(View v) {
-        String getEmail = emailInput.getText().toString().trim();
-        String getPassword = passwordInput.getText().toString().trim();
-        if (isValidEmail(getEmail) && !TextUtils.isEmpty(getPassword)) {
+        String getEmail = emailInput.getEditText().getText().toString().trim();
+        String getPassword = passwordInput.getEditText().getText().toString().trim();
+        if (!isValidEmail(getEmail)) {
+            emailInput.setError("This is not a email");
+        }
+        if(TextUtils.isEmpty(getPassword)){
+            passwordInput.setError("Please enter your password");
+        }
+        if(isValidEmail(getEmail) && !TextUtils.isEmpty(getPassword)) {
+            emailInput.setError(null);
+            passwordInput.setError(null);
             UserLoginDTO user = new UserLoginDTO(getEmail, getPassword);
             loadingSignIn.setVisibility(View.VISIBLE);
             requestLogin(user);
-        } else {
-            Snackbar.make(signInActivity, "Đăng nhập thất bại !"
-                    , Snackbar.LENGTH_LONG).show();
         }
     }
 

@@ -55,14 +55,15 @@
                     app:cardElevation="0dp">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/et_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
+                        app:errorEnabled="true"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -91,14 +92,15 @@
                     app:cardElevation="0dp">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
+                        app:errorEnabled="true"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -126,14 +128,15 @@
                     app:cardElevation="0dp">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/et_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
+                        app:errorEnabled="true"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -161,14 +164,15 @@
                     app:cardElevation="0dp">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/et_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
+                        app:errorEnabled="true"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -197,15 +201,16 @@
                     app:cardElevation="0dp">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/et_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:gravity="center"
                         app:hintEnabled="false"
+                        app:errorEnabled="true"
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_password"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -233,15 +238,16 @@
                     app:cardElevation="0dp">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/et_confirm_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         app:hintEnabled="false"
                         android:layout_marginBottom="8dp"
+                        app:errorEnabled="true"
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_confirm_password"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
