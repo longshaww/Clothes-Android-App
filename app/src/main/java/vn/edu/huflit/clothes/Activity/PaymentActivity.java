@@ -6,6 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,15 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,10 +34,10 @@ import vn.edu.huflit.clothes.Adapter.CartAdapter;
 import vn.edu.huflit.clothes.CartHelper;
 import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
 import vn.edu.huflit.clothes.models.Bill;
-import vn.edu.huflit.clothes.models.BillDTO;
+import vn.edu.huflit.clothes.models.CreateBillDTO;
 import vn.edu.huflit.clothes.models.Cart;
-import vn.edu.huflit.clothes.models.ProductBill;
 import vn.edu.huflit.clothes.models.User;
 
 public class PaymentActivity extends AppCompatActivity implements CartAdapter.Listener {
@@ -47,9 +46,7 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     RecyclerView checkoutRcv;
     CartAdapter cartAdapter;
     TextView cartCount, nameCheckout, addressCheckout, phoneCheckout, dateDelivery, subTotalPrice, totalPrice;
-    SharedPreferences sharedPreferences;
     CartHelper cartHelper;
-    Gson gson;
     Button confirmCheckoutButton;
     LinearProgressIndicator loadingCheckout;
 
@@ -90,7 +87,6 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     }
 
     public void initCartCheckOutRcv() {
-        sharedPreferences = getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
         checkoutRcv = findViewById(R.id.checkoutRcv);
         cartHelper = new CartHelper(getBaseContext());
         cartAdapter = new CartAdapter(getBaseContext(), cartHelper.getAllProductCart(), this::onClick, null, true);
@@ -101,18 +97,8 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
         cartCount.setText(Integer.toString(cartAdapter.cartCount()) + " ITEMS");
     }
 
-    public User handleSharePreferences() {
-        gson = new Gson();
-        String userJSON = sharedPreferences.getString("user", "0");//second parameter is necessary ie.,Value to return if this preference does not exist.
-        if (userJSON == null) {
-            Toast.makeText(this, "You haven't login !", Toast.LENGTH_SHORT).show();
-        }
-        User user = gson.fromJson(userJSON, User.class);
-        return user;
-    }
-
     public void setTextToView() {
-        User user = handleSharePreferences();
+        User user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
         nameCheckout.setText(user.getName());
         addressCheckout.setText(user.getAddress());
         phoneCheckout.setText(user.getPhoneNumber());
@@ -138,8 +124,8 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     }
 
     public void onConfirmCheckout(View view) {
-        User user = handleSharePreferences();
-        BillDTO bill = new BillDTO(user.getID(),user.getName(), user.email, user.getPhoneNumber(), user.getAddress(), "COD", cartHelper.responseProducts());
+        User user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
+        CreateBillDTO bill = new CreateBillDTO(user.getID(), user.getName(), user.email, user.getPhoneNumber(), user.getAddress(), "COD", cartHelper.responseProducts());
         new AlertDialog.Builder(this)
                 .setTitle("Confirmation")
                 .setMessage("Bạn đã kiểm tra thông tin chưa ?")
@@ -157,13 +143,15 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     }
 
 
-    public void sendBill(BillDTO bill) {
+    public void sendBill(CreateBillDTO bill) {
         ApiService.apiService.postBill(bill).enqueue(new Callback<Bill>() {
             @Override
             public void onResponse(Call<Bill> call, Response<Bill> response) {
                 Toast.makeText(PaymentActivity.this, "Hoàn tất", Toast.LENGTH_SHORT).show();
                 cartHelper.clearCart();
                 loadingCheckout.setVisibility(View.INVISIBLE);
+                sendNotification();
+                MainActivity.bottomNavigationView.getOrCreateBadge(R.id.navigation_cart).setNumber(cartHelper.cartCount());
             }
 
             @Override
@@ -171,5 +159,24 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
                 Toast.makeText(PaymentActivity.this, "Something wrong ~!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void sendNotification() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        String CHANNEL_ID = getResources().getString(R.string.channel_id);
+        NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, getResources().getString(R.string.channel_name), NotificationManager.IMPORTANCE_HIGH);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
+        Notification notification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
+                .setContentText("Cảm ơn bạn đã lựa chọn HighClub !")
+                .setContentTitle("Thư cảm ơn")
+                .setContentIntent(pendingIntent)
+//                .addAction(android.R.drawable.sym_action_chat,"Title",pendingIntent)
+                .setChannelId(CHANNEL_ID)
+                .setSmallIcon(R.drawable.app_small_logo)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.createNotificationChannel(notificationChannel);
+        notificationManager.notify(1, notification);
     }
 }

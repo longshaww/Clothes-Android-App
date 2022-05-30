@@ -97,7 +97,7 @@ public class SigninActivity extends AppCompatActivity {
         String getEmail = emailInput.getEditText().getText().toString().trim();
         String getPassword = passwordInput.getEditText().getText().toString().trim();
         if (!isValidEmail(getEmail)) {
-            emailInput.setError("This is not a email");
+            emailInput.setError("Please enter your email");
         }
         if(TextUtils.isEmpty(getPassword)){
             passwordInput.setError("Please enter your password");
@@ -124,11 +124,16 @@ public class SigninActivity extends AppCompatActivity {
                     editor.commit();
                     checkLogin();
                 }
+                if(response.code() == 400){
+                    Snackbar.make(signInActivity, "Vui lòng kiểm tra lại thông tin đăng nhập"
+                            , Snackbar.LENGTH_LONG).show();
+                }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(SigninActivity.this, "Something wrong ~!", Toast.LENGTH_SHORT).show();
+                Snackbar.make(signInActivity, getResources().getString(R.string.response_fail)
+                        , Snackbar.LENGTH_LONG).show();
             }
         });
     }

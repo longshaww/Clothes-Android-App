@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
@@ -15,8 +14,11 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import vn.edu.huflit.clothes.models.Bill;
-import vn.edu.huflit.clothes.models.BillDTO;
+import vn.edu.huflit.clothes.models.ChangePasswordDTO;
+import vn.edu.huflit.clothes.models.CreateBillDTO;
+import vn.edu.huflit.clothes.models.Customer;
 import vn.edu.huflit.clothes.models.Product;
+import vn.edu.huflit.clothes.models.UpdateAddressPhoneNumberDTO;
 import vn.edu.huflit.clothes.models.User;
 import vn.edu.huflit.clothes.models.UserLoginDTO;
 import vn.edu.huflit.clothes.models.UserRegisterDTO;
@@ -30,7 +32,7 @@ public interface ApiService {
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.20.59:4000/")
+            .baseUrl("http://95.111.203.4:4000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
@@ -57,5 +59,11 @@ public interface ApiService {
     Call<User> register(@Body UserRegisterDTO user);
 
     @POST("bill")
-    Call<Bill> postBill(@Body BillDTO bill);
+    Call<Bill> postBill(@Body CreateBillDTO bill);
+
+    @POST("authCookie/update")
+    Call<User> changePassword(@Body ChangePasswordDTO body);
+
+    @POST("authCookie/update")
+    Call<User> updateAddressPhoneNumber(@Body UpdateAddressPhoneNumberDTO body);
 }

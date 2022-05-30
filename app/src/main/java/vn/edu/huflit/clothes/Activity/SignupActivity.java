@@ -73,26 +73,32 @@ public class SignupActivity extends AppCompatActivity {
         String getAddress = addressInput.getEditText().getText().toString();
         String getPassword = passwordInput.getEditText().getText().toString();
         String getConfirmPassword = confirmPasswordInput.getEditText().getText().toString();
-        if(!SigninActivity.isValidEmail(getEmail)){
-            emailInput.setError("This is not email");
+        if (!SigninActivity.isValidEmail(getEmail)) {
+            emailInput.setError("Please enter your email");
         }
-        if(TextUtils.isEmpty(getName)){
+        if (TextUtils.isEmpty(getName)) {
             nameInput.setError("Please enter your name");
         }
-        if(TextUtils.isEmpty(getPhone)){
+        if (TextUtils.isEmpty(getPhone)) {
             phoneInput.setError("Please enter your phone number");
         }
-        if(TextUtils.isEmpty(getAddress)){
+        if (TextUtils.isEmpty(getAddress)) {
             addressInput.setError("Please enter your address");
         }
-        if(TextUtils.isEmpty(getPassword)){
+        if (TextUtils.isEmpty(getPassword)) {
             passwordInput.setError("Please enter your password");
         }
-        if(getAddress != getPassword){
-            confirmPasswordInput.setError("The password is not fit above");
+        if (!getConfirmPassword.equals(getPassword)) {
+            confirmPasswordInput.setError("Your confirm password doesn't match");
         }
         if (SigninActivity.isValidEmail(getEmail) && !TextUtils.isEmpty(getName) && !TextUtils.isEmpty(getPhone)
-                && !TextUtils.isEmpty(getAddress) && !TextUtils.isEmpty(getPassword) && !TextUtils.isEmpty(getConfirmPassword)) {
+                && !TextUtils.isEmpty(getAddress) && !TextUtils.isEmpty(getPassword) && getConfirmPassword.equals(getPassword)) {
+            emailInput.setError(null);
+            nameInput.setError(null);
+            phoneInput.setError(null);
+            addressInput.setError(null);
+            passwordInput.setError(null);
+            confirmPasswordInput.setError(null);
             UserRegisterDTO user = new UserRegisterDTO(getEmail, getName, getPhone, getPassword, getAddress);
             loadingSignUp.setVisibility(View.VISIBLE);
             requestRegister(user);

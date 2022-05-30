@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".Activity.IntroActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,17 +24,19 @@
         </activity>
         <activity
             android:name=".Activity.SigninActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
+        <activity
+            android:name=".Activity.ChangePasswordActivity"
+            android:exported="true" />
         <activity
             android:name=".Activity.SignupActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Activity.PaymentActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity android:name=".Activity.CollectionActivity" />
         <activity android:name=".Activity.TopActivity" />
         <activity android:name=".Activity.DetailActivity" />
