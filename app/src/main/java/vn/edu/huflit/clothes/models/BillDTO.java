@@ -3,6 +3,7 @@ package vn.edu.huflit.clothes.models;
 import java.util.List;
 
 public class BillDTO {
+    private String userID;
     private String nameCustomer;
     private String email;
     private String phoneNumber;
@@ -10,7 +11,8 @@ public class BillDTO {
     private String paymentMethod;
     private List<Cart> listProduct;
 
-    public BillDTO(String nameCustomer, String email, String phoneNumber, String address, String paymentMethod, List<Cart> listProduct) {
+    public BillDTO(String userID ,String nameCustomer, String email, String phoneNumber, String address, String paymentMethod, List<Cart> listProduct) {
+        this.userID = userID;
         this.nameCustomer = nameCustomer;
         this.email = email;
         this.phoneNumber = phoneNumber;

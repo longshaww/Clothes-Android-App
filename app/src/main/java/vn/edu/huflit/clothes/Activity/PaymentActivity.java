@@ -139,7 +139,7 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
 
     public void onConfirmCheckout(View view) {
         User user = handleSharePreferences();
-        BillDTO bill = new BillDTO(user.getName(), user.email, user.getPhoneNumber(), user.getAddress(), "COD", cartHelper.responseProducts());
+        BillDTO bill = new BillDTO(user.getID(),user.getName(), user.email, user.getPhoneNumber(), user.getAddress(), "COD", cartHelper.responseProducts());
         new AlertDialog.Builder(this)
                 .setTitle("Confirmation")
                 .setMessage("Bạn đã kiểm tra thông tin chưa ?")
