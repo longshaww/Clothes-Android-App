@@ -25,14 +25,14 @@ import vn.edu.huflit.clothes.models.UserRegisterDTO;
 
 public interface ApiService {
 
-    //http://95.111.203.4:4000/
+    //http://139.59.104.129:4000/
 
     Gson gson = new GsonBuilder()
             .setDateFormat("dd-MM-yyyy HH:mm:ss")
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://95.111.203.4:4000/")
+            .baseUrl("http://139.59.104.129:4000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
