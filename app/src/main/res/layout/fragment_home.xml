@@ -91,6 +91,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/bottom_collection_card"
                 android:layout_width="190dp"
                 android:layout_height="190dp"
                 android:layout_gravity="fill"
@@ -121,6 +122,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/outerwear_collection_card"
                 android:layout_width="190dp"
                 android:layout_height="190dp"
                 android:layout_gravity="fill"
@@ -152,6 +154,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/accessories_collection_card"
                 android:layout_width="190dp"
                 android:layout_height="190dp"
                 android:layout_gravity="fill"

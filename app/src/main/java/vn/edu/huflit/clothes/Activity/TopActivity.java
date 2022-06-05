@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,20 +26,24 @@ import vn.edu.huflit.clothes.models.Product;
 public class TopActivity extends AppCompatActivity implements ProductAdapter.Listener {
     private RecyclerView topCollectionView;
     private ProductAdapter productAdapter;
+    private ArrayList<Product> listProducts;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acitivity_top);
+        setContentView(R.layout.activity_collection);
         initRecyclerView();
+        getTopList();
     }
 
 
     public void initRecyclerView() {
-        topCollectionView = findViewById(R.id.top_collection_list);
+        listProducts = new ArrayList<>();
+        topCollectionView = findViewById(R.id.allProductView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(TopActivity.this, 2);
         topCollectionView.setLayoutManager(gridLayoutManager);
-        getTopList();
+        productAdapter = new ProductAdapter(TopActivity.this, listProducts, TopActivity.this::onClick);
+        topCollectionView.setAdapter(productAdapter);
     }
 
     public void getTopList() {
@@ -46,8 +51,9 @@ public class TopActivity extends AppCompatActivity implements ProductAdapter.Lis
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    productAdapter = new ProductAdapter(TopActivity.this, response.body(), TopActivity.this::onClick);
-                    topCollectionView.setAdapter(productAdapter);
+                    listProducts.clear();
+                    listProducts.addAll(response.body());
+                    productAdapter.setList(listProducts);
                 }
             }
 

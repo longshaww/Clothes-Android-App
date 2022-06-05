@@ -39,6 +39,9 @@
             android:exported="true" />
         <activity android:name=".Activity.CollectionActivity" />
         <activity android:name=".Activity.TopActivity" />
+        <activity android:name=".Activity.BottomActivity" />
+        <activity android:name=".Activity.OuterwearActivity" />
+        <activity android:name=".Activity.AccessoriesActivity" />
         <activity android:name=".Activity.DetailActivity" />
     </application>
 

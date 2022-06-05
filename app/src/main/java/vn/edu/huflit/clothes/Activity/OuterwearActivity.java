@@ -4,15 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,37 +18,37 @@ import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Product;
 
-
-public class CollectionActivity extends AppCompatActivity implements ProductAdapter.Listener {
-    private RecyclerView allProductView;
+public class OuterwearActivity extends AppCompatActivity implements ProductAdapter.Listener {
+    private RecyclerView OuterwearCollectionView;
     private ProductAdapter productAdapter;
-    private ArrayList<Product> listProduct;
+    private ArrayList<Product> listProducts;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
         initRecyclerView();
-        getAllProducts();
+        getOuterWears();
     }
+
 
     public void initRecyclerView() {
-        listProduct = new ArrayList<>();
-        allProductView = findViewById(R.id.allProductView);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        allProductView.setLayoutManager(gridLayoutManager);
-        productAdapter = new ProductAdapter(CollectionActivity.this, listProduct, CollectionActivity.this::onClick);
-        allProductView.setAdapter(productAdapter);
+        listProducts = new ArrayList<>();
+        OuterwearCollectionView = findViewById(R.id.allProductView);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(OuterwearActivity.this, 2);
+        OuterwearCollectionView.setLayoutManager(gridLayoutManager);
+        productAdapter = new ProductAdapter(OuterwearActivity.this, listProducts, OuterwearActivity.this::onClick);
+        OuterwearCollectionView.setAdapter(productAdapter);
     }
 
-    private void getAllProducts() {
-        ApiService.apiService.getAllProduct().enqueue(new Callback<List<Product>>() {
+    private void getOuterWears() {
+        ApiService.apiService.getOuterWears().enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
-                    listProduct.clear();
-                    listProduct.addAll(response.body());
-                    productAdapter.setList(listProduct);
+                    listProducts.clear();
+                    listProducts.addAll(response.body());
+                    productAdapter.setList(listProducts);
                 }
             }
 
@@ -65,12 +59,11 @@ public class CollectionActivity extends AppCompatActivity implements ProductAdap
         });
     }
 
+
     @Override
     public void onClick(Product product) {
         Intent intent = new Intent(this, DetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("object_product", product);
-        intent.putExtras(bundle);
+        intent.putExtra("idProduct", product.get_id());
         startActivity(intent);
     }
 }

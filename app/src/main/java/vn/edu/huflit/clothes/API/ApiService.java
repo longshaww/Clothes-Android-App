@@ -32,7 +32,7 @@ public interface ApiService {
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://139.59.104.129:4000/")
+            .baseUrl("http://192.168.1.9:4000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
@@ -40,17 +40,26 @@ public interface ApiService {
     @GET("android")
     Call<List<Product>> getAllProduct();
 
-    @GET("search")
-    Call<List<Product>> search(@Query("q") String nameProduct, @Query("ascending") String ascending,@Query("descending") String descending);
+    @GET("android/new-arrivals")
+    Call<List<Product>> getNewArrivals();
 
     @GET("android/tops")
     Call<List<Product>> getTops();
 
+    @GET("android/bottoms")
+    Call<List<Product>> getBottoms();
+
+    @GET("android/accessories")
+    Call<List<Product>> getAccessories();
+
+    @GET("android/outerwears")
+    Call<List<Product>> getOuterWears();
+
+    @GET("search")
+    Call<List<Product>> search(@Query("q") String nameProduct, @Query("ascending") String ascending, @Query("descending") String descending);
+
     @GET("product/{id}")
     Call<Product> getProductDetail(@Path("id") String productId);
-
-    @GET("android/new-arrivals")
-    Call<List<Product>> getNewArrivals();
 
     @POST("authCookie/login")
     Call<User> login(@Body UserLoginDTO user);
