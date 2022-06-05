@@ -10,8 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +18,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.Adapter.BillHistoryAdapter;
-import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
 import vn.edu.huflit.clothes.models.Bill;
@@ -28,10 +25,12 @@ import vn.edu.huflit.clothes.models.BillHistoryDTO;
 import vn.edu.huflit.clothes.models.User;
 
 public class BillHistoryFragment extends Fragment {
-    View mView;
+    private View mView;
     private ArrayList<Bill> listBills;
     private BillHistoryAdapter billHistoryAdapter;
     private RecyclerView billHistoryRcv;
+    User user;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,9 +38,15 @@ public class BillHistoryFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_tab_history, container, false);
 
         init();
-        User user = GetUserSharePreferences.handleSharePreferences(getContext());
+        user = GetUserSharePreferences.handleSharePreferences(getContext());
         getBillHistory(user);
         return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getBillHistory(user);
     }
 
     private void init () {
