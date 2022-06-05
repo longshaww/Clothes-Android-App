@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,19 +26,25 @@ import com.google.gson.Gson;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
+import vn.edu.huflit.clothes.Adapter.BillHistoryAdapter;
 import vn.edu.huflit.clothes.Adapter.CartAdapter;
+import vn.edu.huflit.clothes.Adapter.CustomerInfoBillAdapter;
 import vn.edu.huflit.clothes.CartHelper;
 import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
 import vn.edu.huflit.clothes.models.Bill;
+import vn.edu.huflit.clothes.models.BillHistoryDTO;
 import vn.edu.huflit.clothes.models.CreateBillDTO;
 import vn.edu.huflit.clothes.models.Cart;
+import vn.edu.huflit.clothes.models.Customer;
 import vn.edu.huflit.clothes.models.User;
 
 public class PaymentActivity extends AppCompatActivity implements CartAdapter.Listener {
@@ -45,10 +52,14 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     Toolbar toolbar;
     RecyclerView checkoutRcv;
     CartAdapter cartAdapter;
-    TextView cartCount, nameCheckout, addressCheckout, phoneCheckout, dateDelivery, subTotalPrice, totalPrice;
+    TextView cartCount, nameCheckout, addressCheckout, phoneCheckout, dateDelivery, subTotalPrice, totalPrice, changeCustomerText;
     CartHelper cartHelper;
     Button confirmCheckoutButton;
     LinearProgressIndicator loadingCheckout;
+    LinearLayout customerInfoLinear;
+    RecyclerView infoCustomerRcv;
+    ArrayList<Customer> listCustomers;
+    CustomerInfoBillAdapter customerInfoBillAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +82,12 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
         getSupportActionBar().setTitle("Payment");
         init();
         initCartCheckOutRcv();
+        initCustomerInfoRcv();
         setTextToView();
     }
 
     public void init() {
+        listCustomers = new ArrayList();
         nameCheckout = findViewById(R.id.name_checkout);
         addressCheckout = findViewById(R.id.address_checkout);
         phoneCheckout = findViewById(R.id.phone_checkout);
@@ -82,8 +95,19 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
         subTotalPrice = findViewById(R.id.sub_total_checkout);
         totalPrice = findViewById(R.id.total_checkout);
         loadingCheckout = findViewById(R.id.loading_checkout);
+        changeCustomerText = findViewById(R.id.change_customer_bill_info);
+        customerInfoLinear = findViewById(R.id.customer_info_linear);
         confirmCheckoutButton = findViewById(R.id.confirm_button_checkout);
+        infoCustomerRcv = findViewById(R.id.info_customer_rcv);
         confirmCheckoutButton.setOnClickListener(this::onConfirmCheckout);
+        changeCustomerText.setOnClickListener(this::onClickChangeCustomerInfoBil);
+    }
+
+    private void initCustomerInfoRcv() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        infoCustomerRcv.setLayoutManager(linearLayoutManager);
+        customerInfoBillAdapter = new CustomerInfoBillAdapter(this, listCustomers);
+        infoCustomerRcv.setAdapter(customerInfoBillAdapter);
     }
 
     public void initCartCheckOutRcv() {
@@ -122,6 +146,30 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
         intent.putExtra("idProduct", cart.getId());
         startActivity(intent);
     }
+
+    public void onClickChangeCustomerInfoBil(View view) {
+        User user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
+        customerInfoLinear.setVisibility(View.GONE);
+        infoCustomerRcv.setVisibility(View.VISIBLE);
+        BillHistoryDTO customer = new BillHistoryDTO(user.getID());
+
+        ApiService.apiService.getCustomerInfo(customer).enqueue(new Callback<List<Customer>>() {
+            @Override
+            public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
+                if (response.isSuccessful()) {
+                    listCustomers.clear();
+                    listCustomers.addAll(response.body());
+                    customerInfoBillAdapter.setList(listCustomers);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Customer>> call, Throwable t) {
+                Toast.makeText(PaymentActivity.this, "Something wrong ~!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     public void onConfirmCheckout(View view) {
         User user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
@@ -170,7 +218,6 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
                 .setContentText("Cảm ơn bạn đã lựa chọn HighClub !")
                 .setContentTitle("Thư cảm ơn")
                 .setContentIntent(pendingIntent)
-//                .addAction(android.R.drawable.sym_action_chat,"Title",pendingIntent)
                 .setChannelId(CHANNEL_ID)
                 .setSmallIcon(R.drawable.app_small_logo)
                 .build();

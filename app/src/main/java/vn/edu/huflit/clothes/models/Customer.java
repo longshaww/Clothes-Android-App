@@ -1,18 +1,30 @@
 package vn.edu.huflit.clothes.models;
 
 public class Customer {
+    private String _id;
     private String nameCustomer;
     private String address;
     private String email;
     private String phoneNumber;
     private Boolean isRegister;
+    private String userID;
 
-    public Customer(String nameCustomer, String address, String email, String phoneNumber, Boolean isRegister) {
+    public Customer(String _id, String nameCustomer, String address, String email, String phoneNumber, Boolean isRegister, String userID) {
+        this._id = _id;
         this.nameCustomer = nameCustomer;
         this.address = address;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.isRegister = isRegister;
+        this.userID = userID;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getNameCustomer() {
@@ -55,14 +67,11 @@ public class Customer {
         isRegister = register;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "nameCustomer='" + nameCustomer + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", isRegister=" + isRegister +
-                '}';
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

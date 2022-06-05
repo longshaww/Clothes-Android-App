@@ -33,7 +33,7 @@ public interface ApiService {
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://139.59.104.129:4000/")
+            .baseUrl("http://192.168.1.9:4000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
@@ -73,6 +73,9 @@ public interface ApiService {
 
     @POST("bill/history")
     Call<List<Bill>> getBillHistory(@Body BillHistoryDTO body);
+
+    @POST("bill/user")
+    Call<List<Customer>> getCustomerInfo(@Body BillHistoryDTO body);
 
     @POST("authCookie/update")
     Call<User> changePassword(@Body ChangePasswordDTO body);

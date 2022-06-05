@@ -49,7 +49,7 @@ public class BillHistoryAdapter extends RecyclerView.Adapter<BillHistoryAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BillHistoryAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Bill bill = list.get(position);
         if (bill == null) {
             return;
