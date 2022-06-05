@@ -4,22 +4,71 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import vn.edu.huflit.clothes.API.ApiService;
+import vn.edu.huflit.clothes.Adapter.BillHistoryAdapter;
+import vn.edu.huflit.clothes.Adapter.ProductAdapter;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
+import vn.edu.huflit.clothes.models.Bill;
+import vn.edu.huflit.clothes.models.BillHistoryDTO;
+import vn.edu.huflit.clothes.models.User;
 
 public class BillHistoryFragment extends Fragment {
     View mView;
-
-    public BillHistoryFragment() {
-
-    }
+    private ArrayList<Bill> listBills;
+    private BillHistoryAdapter billHistoryAdapter;
+    private RecyclerView billHistoryRcv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_tab_history, container, false);
+
+        init();
+        User user = GetUserSharePreferences.handleSharePreferences(getContext());
+        getBillHistory(user);
         return mView;
+    }
+
+    private void init () {
+        billHistoryRcv = mView.findViewById(R.id.billRcv);
+        listBills = new ArrayList();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        billHistoryRcv.setLayoutManager(linearLayoutManager);
+        billHistoryAdapter = new BillHistoryAdapter(getContext(), listBills);
+        billHistoryRcv.setAdapter(billHistoryAdapter);
+    }
+
+    private void getBillHistory(User user) {
+        BillHistoryDTO bill = new BillHistoryDTO(user.getID());
+        ApiService.apiService.getBillHistory(bill).enqueue(new Callback<List<Bill>>() {
+            @Override
+            public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
+                if(response.isSuccessful()){
+                    listBills.clear();
+                    listBills.addAll(response.body());
+                    billHistoryAdapter.setList(listBills);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Bill>> call, Throwable t) {
+                Toast.makeText(getContext(), "Something wrong ~!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

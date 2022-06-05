@@ -14,6 +14,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import vn.edu.huflit.clothes.models.Bill;
+import vn.edu.huflit.clothes.models.BillHistoryDTO;
 import vn.edu.huflit.clothes.models.ChangePasswordDTO;
 import vn.edu.huflit.clothes.models.CreateBillDTO;
 import vn.edu.huflit.clothes.models.Customer;
@@ -70,9 +71,13 @@ public interface ApiService {
     @POST("bill")
     Call<Bill> postBill(@Body CreateBillDTO bill);
 
+    @POST("bill/history")
+    Call<List<Bill>> getBillHistory(@Body BillHistoryDTO body);
+
     @POST("authCookie/update")
     Call<User> changePassword(@Body ChangePasswordDTO body);
 
     @POST("authCookie/update")
     Call<User> updateAddressPhoneNumber(@Body UpdateAddressPhoneNumberDTO body);
+
 }

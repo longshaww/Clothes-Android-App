@@ -11,6 +11,8 @@ public class Bill {
     private Boolean status;
     private Date createdAt;
     private Date updatedAt;
+    private int total;
+    private int qtyProduct;
 
     public Bill(String _id, String customerID, List<Cart> listProduct, String paymentMethod, Boolean status, Date createdAt, Date updatedAt) {
         this._id = _id;
@@ -20,6 +22,18 @@ public class Bill {
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public Bill(String _id, String customerID, List<Cart> listProduct, String paymentMethod, Boolean status, Date createdAt, Date updatedAt, int total, int qtyProduct) {
+        this._id = _id;
+        this.customerID = customerID;
+        this.listProduct = listProduct;
+        this.paymentMethod = paymentMethod;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.total = total;
+        this.qtyProduct = qtyProduct;
     }
 
     public String get_id() {
@@ -78,16 +92,19 @@ public class Bill {
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public String toString() {
-        return "Bill{" +
-                "_id='" + _id + '\'' +
-                ", customerID='" + customerID + '\'' +
-                ", listProduct=" + listProduct +
-                ", paymentMethod='" + paymentMethod + '\'' +
-                ", status=" + status +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getQtyProduct() {
+        return qtyProduct;
+    }
+
+    public void setQtyProduct(int qtyProduct) {
+        this.qtyProduct = qtyProduct;
     }
 }
