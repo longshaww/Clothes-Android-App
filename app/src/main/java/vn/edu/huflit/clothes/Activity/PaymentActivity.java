@@ -77,6 +77,7 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     @Override
     public void onResume() {
         super.onResume();
+        setTextToView();
     }
 
     public void init() {

@@ -25,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.Activity.ChangePasswordActivity;
+import vn.edu.huflit.clothes.Activity.CustomerInfoActivity;
 import vn.edu.huflit.clothes.Activity.SigninActivity;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
@@ -33,11 +34,10 @@ import vn.edu.huflit.clothes.models.User;
 
 public class AccountTabFragment extends Fragment {
     private View mView;
-    Button logoutBtn, updateAddressPhoneBtn, changePasswordBtn;
+    Button logoutBtn, changePasswordBtn,updateBtn;
     SharedPreferences sharedPreferences;
     Gson gson;
-    TextInputLayout phoneAccount, addressAccount;
-    TextView nameAccount, emailAccount;
+    TextView nameAccount, emailAccount,phoneAccount,addressAccount;
     CircleImageView avatarAccount;
     LinearProgressIndicator loadingUpdateAccount;
 
@@ -55,11 +55,16 @@ public class AccountTabFragment extends Fragment {
         return mView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTextToView();
+    }
+
     public void init() {
         sharedPreferences = getContext().getSharedPreferences("dataLogin", Context.MODE_PRIVATE);
         gson = new Gson();
         logoutBtn = mView.findViewById(R.id.logout_btn);
-        updateAddressPhoneBtn = mView.findViewById(R.id.btn_update_address_phone_account);
         changePasswordBtn = mView.findViewById(R.id.btn_change_password_account);
         nameAccount = mView.findViewById(R.id.name_account);
         emailAccount = mView.findViewById(R.id.email_account);
@@ -68,8 +73,9 @@ public class AccountTabFragment extends Fragment {
         avatarAccount = mView.findViewById(R.id.avatar_account);
         loadingUpdateAccount = mView.findViewById(R.id.loading_update_account);
         logoutBtn.setOnClickListener(this::onLogOutClick);
-        updateAddressPhoneBtn.setOnClickListener(this::onUpdateAddressPhoneClick);
         changePasswordBtn.setOnClickListener(this::onChangePasswordClick);
+        updateBtn = mView.findViewById(R.id.btn_update_customer_info);
+        updateBtn.setOnClickListener(this::onUpdateClick);
         setTextToView();
     }
 
@@ -77,8 +83,8 @@ public class AccountTabFragment extends Fragment {
         User user = GetUserSharePreferences.handleSharePreferences(getContext());
         nameAccount.setText(user.getName());
         emailAccount.setText(user.getEmail());
-        phoneAccount.getEditText().setText(user.getPhoneNumber());
-        addressAccount.getEditText().setText(user.getAddress());
+        phoneAccount.setText(user.getPhoneNumber());
+        addressAccount.setText(user.getAddress());
         if (user.getAvatar() != null) {
             Picasso.get().load(user.getAvatar()).into(avatarAccount);
         }
@@ -101,48 +107,15 @@ public class AccountTabFragment extends Fragment {
         }
     }
 
-    public void onUpdateAddressPhoneClick(View view) {
-        String getAddress = addressAccount.getEditText().getText().toString();
-        String getPhone = phoneAccount.getEditText().getText().toString();
-        if(TextUtils.isEmpty(getAddress)){
-            addressAccount.setError("Please enter your address");
-        }
-        if(TextUtils.isEmpty(getPhone)){
-            phoneAccount.setError("Please enter your phone number");
-        }
-        if(!TextUtils.isEmpty(getAddress) && !TextUtils.isEmpty(getPhone)){
-            addressAccount.setError(null);
-            phoneAccount.setError(null);
-            loadingUpdateAccount.setVisibility(View.VISIBLE);
-            requestUpdateAddressPhone(getAddress, getPhone);
-        }
-    }
-
-    public void onChangePasswordClick(View view) {
-        Intent intent = new Intent(getContext(),ChangePasswordActivity.class);
+    private void onUpdateClick(View view){
+        Intent intent = new Intent(getContext(), CustomerInfoActivity.class);
         startActivity(intent);
     }
 
-    public void requestUpdateAddressPhone(String address, String phone) {
-        User user = GetUserSharePreferences.handleSharePreferences(getContext());
-        UpdateAddressPhoneNumberDTO updateAddressPhoneNumberDTO = new UpdateAddressPhoneNumberDTO(user.getID(), address, phone);
-        ApiService.apiService.updateAddressPhoneNumber(updateAddressPhoneNumberDTO).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                User resUser = response.body();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("user", gson.toJson(resUser));
-                editor.commit();
-                loadingUpdateAccount.setVisibility(View.INVISIBLE);
-                Snackbar.make(mView, "Cập nhật thông tin thành công"
-                        , Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Snackbar.make(mView, "Cập nhật thất bại"
-                        , Snackbar.LENGTH_LONG).show();
-            }
-        });
+    public void onChangePasswordClick(View view) {
+        Intent intent = new Intent(getContext(), ChangePasswordActivity.class);
+        startActivity(intent);
     }
+
+
 }

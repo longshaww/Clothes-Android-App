@@ -1,6 +1,7 @@
 package vn.edu.huflit.clothes.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.Adapter.CustomerInfoBillAdapter;
+import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
 import vn.edu.huflit.clothes.models.UserIdDTO;
@@ -33,6 +36,7 @@ public class CustomerInfoActivity extends AppCompatActivity implements CustomerI
     User user;
     Button addNewCustomerInfoBtn;
     View view;
+    Gson gson;
 
 
     @Override
@@ -52,6 +56,7 @@ public class CustomerInfoActivity extends AppCompatActivity implements CustomerI
 
 
     private void init() {
+        gson = new Gson();
         view = findViewById(R.id.activity_change_customer_info);
         user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
         listCustomers = new ArrayList<>();
@@ -122,7 +127,19 @@ public class CustomerInfoActivity extends AppCompatActivity implements CustomerI
     @Override
     public void onEditClick(Customer customer) {
         Intent intent = new Intent(this, EditCustomerInfoActivity.class);
-        intent.putExtra("customerId",customer.get_id());
+        intent.putExtra("customerId", customer.get_id());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onChoosenClick(Customer customer) {
+        SharedPreferences sharedPreferences = getSharedPreferences("dataLogin", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        User thisUser = user;
+        thisUser.setCustomer(customer);
+        editor.putString("user",gson.toJson(thisUser));
+        editor.commit();
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

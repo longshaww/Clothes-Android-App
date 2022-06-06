@@ -68,6 +68,12 @@ public class CustomerInfoBillAdapter extends RecyclerView.Adapter<CustomerInfoBi
                 listener.onEditClick(customer);
             }
         });
+        holder.checkedInfoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onChoosenClick(customer);
+            }
+        });
     }
 
     @Override
@@ -80,8 +86,8 @@ public class CustomerInfoBillAdapter extends RecyclerView.Adapter<CustomerInfoBi
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameCustomer, addressCustomer, phoneCustomer;
-        private ImageView deleteBtn,editBtn;
+        private TextView nameCustomer, addressCustomer, phoneCustomer, checkedInfoBtn;
+        private ImageView deleteBtn, editBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -90,12 +96,16 @@ public class CustomerInfoBillAdapter extends RecyclerView.Adapter<CustomerInfoBi
             phoneCustomer = itemView.findViewById(R.id.phone_info_customer);
             deleteBtn = itemView.findViewById(R.id.delete_customer_info);
             editBtn = itemView.findViewById(R.id.edit_customer_info);
+            checkedInfoBtn = itemView.findViewById(R.id.checked_customer_info);
         }
     }
 
     public interface Listener {
         void onDeleteClick(Customer customer);
+
         void onEditClick(Customer customer);
+
+        void onChoosenClick(Customer customer);
     }
 
 }

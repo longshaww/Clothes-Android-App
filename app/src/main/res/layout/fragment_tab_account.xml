@@ -73,49 +73,54 @@
                 android:textSize="18dp" />
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phone_account"
+        <LinearLayout
+            android:paddingHorizontal="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            app:errorEnabled="true"
-            app:hintEnabled="false">
+            android:paddingVertical="12dp"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="33dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:drawableStart="@drawable/ic_phone"
-                android:drawablePadding="18dp"
-                android:hint="@string/hint_phone"
-                android:imeOptions="actionNext"
-                android:singleLine="true" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:src="@drawable/ic_phone"
+                />
+            <TextView
+                android:id="@+id/phone_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:singleLine="true"
+                android:layout_marginLeft="10dp"
+                android:text="Phone"
+                android:textSize="18dp" />
+        </LinearLayout>
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/address_account"
+        <LinearLayout
+            android:paddingHorizontal="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            app:errorEnabled="true"
-            app:hintEnabled="false">
+            android:paddingVertical="12dp"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="33dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@android:color/transparent"
-                android:drawableStart="@drawable/ic_baseline_home_24"
-                android:drawablePadding="18dp"
-                android:hint="Address"
-                android:imeOptions="actionNext"
-                android:singleLine="true" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:src="@drawable/ic_address"
+                />
+            <TextView
+                android:id="@+id/address_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:singleLine="true"
+                android:layout_marginLeft="10dp"
+                android:text="Address"
+                android:textSize="18dp" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/btn_update_address_phone_account"
+            android:id="@+id/btn_update_customer_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
