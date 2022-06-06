@@ -77,6 +77,9 @@ public interface ApiService {
     @POST("bill/user")
     Call<List<Customer>> getCustomerInfo(@Body BillHistoryDTO body);
 
+    @POST("bill/customer")
+    Call<Customer> postNewCustomer(@Body Customer customer);
+
     @POST("authCookie/update")
     Call<User> changePassword(@Body ChangePasswordDTO body);
 

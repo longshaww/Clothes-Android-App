@@ -56,10 +56,8 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     CartHelper cartHelper;
     Button confirmCheckoutButton;
     LinearProgressIndicator loadingCheckout;
-    LinearLayout customerInfoLinear;
     RecyclerView infoCustomerRcv;
-    ArrayList<Customer> listCustomers;
-    CustomerInfoBillAdapter customerInfoBillAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +80,15 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
         getSupportActionBar().setTitle("Payment");
         init();
         initCartCheckOutRcv();
-        initCustomerInfoRcv();
         setTextToView();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     public void init() {
-        listCustomers = new ArrayList();
         nameCheckout = findViewById(R.id.name_checkout);
         addressCheckout = findViewById(R.id.address_checkout);
         phoneCheckout = findViewById(R.id.phone_checkout);
@@ -96,19 +97,12 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
         totalPrice = findViewById(R.id.total_checkout);
         loadingCheckout = findViewById(R.id.loading_checkout);
         changeCustomerText = findViewById(R.id.change_customer_bill_info);
-        customerInfoLinear = findViewById(R.id.customer_info_linear);
         confirmCheckoutButton = findViewById(R.id.confirm_button_checkout);
         infoCustomerRcv = findViewById(R.id.info_customer_rcv);
         confirmCheckoutButton.setOnClickListener(this::onConfirmCheckout);
         changeCustomerText.setOnClickListener(this::onClickChangeCustomerInfoBil);
     }
 
-    private void initCustomerInfoRcv() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        infoCustomerRcv.setLayoutManager(linearLayoutManager);
-        customerInfoBillAdapter = new CustomerInfoBillAdapter(this, listCustomers);
-        infoCustomerRcv.setAdapter(customerInfoBillAdapter);
-    }
 
     public void initCartCheckOutRcv() {
         checkoutRcv = findViewById(R.id.checkoutRcv);
@@ -148,26 +142,8 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
     }
 
     public void onClickChangeCustomerInfoBil(View view) {
-        User user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
-        customerInfoLinear.setVisibility(View.GONE);
-        infoCustomerRcv.setVisibility(View.VISIBLE);
-        BillHistoryDTO customer = new BillHistoryDTO(user.getID());
-
-        ApiService.apiService.getCustomerInfo(customer).enqueue(new Callback<List<Customer>>() {
-            @Override
-            public void onResponse(Call<List<Customer>> call, Response<List<Customer>> response) {
-                if (response.isSuccessful()) {
-                    listCustomers.clear();
-                    listCustomers.addAll(response.body());
-                    customerInfoBillAdapter.setList(listCustomers);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Customer>> call, Throwable t) {
-                Toast.makeText(PaymentActivity.this, "Something wrong ~!", Toast.LENGTH_SHORT).show();
-            }
-        });
+        Intent intent = new Intent(this, ChangeCustomerInfoActivity.class);
+        startActivity(intent);
     }
 
 

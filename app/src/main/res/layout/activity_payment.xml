@@ -73,17 +73,7 @@
                     android:textColor="@color/black"
                     android:textSize="14sp" />
             </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/info_customer_rcv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:visibility="gone"
-                />
-
             <LinearLayout
-                android:id="@+id/customer_info_linear"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="40dp"

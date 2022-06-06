@@ -16,14 +16,17 @@ import java.util.List;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.models.Bill;
 import vn.edu.huflit.clothes.models.Customer;
+import vn.edu.huflit.clothes.models.Product;
 
 public class CustomerInfoBillAdapter extends RecyclerView.Adapter<CustomerInfoBillAdapter.ViewHolder> {
     private List<Customer> list;
+    private Listener listener;
     private Context context;
 
-    public CustomerInfoBillAdapter(Context context, List<Customer> list) {
+    public CustomerInfoBillAdapter(Context context, List<Customer> list, Listener listener) {
         this.list = list;
         this.context = context;
+        this.listener = listener;
     }
 
     public List<Customer> getList() {
@@ -53,6 +56,12 @@ public class CustomerInfoBillAdapter extends RecyclerView.Adapter<CustomerInfoBi
         holder.nameCustomer.setText(customer.getNameCustomer());
         holder.phoneCustomer.setText(customer.getPhoneNumber());
         holder.addressCustomer.setText(customer.getAddress());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClick(customer);
+            }
+        });
     }
 
     @Override
@@ -74,4 +83,9 @@ public class CustomerInfoBillAdapter extends RecyclerView.Adapter<CustomerInfoBi
             phoneCustomer = itemView.findViewById(R.id.phone_info_customer);
         }
     }
+
+    public interface Listener {
+        void onClick(Customer customer);
+    }
+
 }
