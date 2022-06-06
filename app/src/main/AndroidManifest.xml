@@ -43,8 +43,9 @@
         <activity android:name=".Activity.OuterwearActivity" />
         <activity android:name=".Activity.AccessoriesActivity" />
         <activity android:name=".Activity.DetailActivity" />
-        <activity android:name=".Activity.ChangeCustomerInfoActivity" />
+        <activity android:name=".Activity.CustomerInfoActivity" />
         <activity android:name=".Activity.AddCustomerInfoActivity" />
+        <activity android:name=".Activity.EditCustomerInfoActivity" />
     </application>
 
 </manifest>

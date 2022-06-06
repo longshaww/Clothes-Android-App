@@ -21,7 +21,7 @@ import vn.edu.huflit.clothes.Adapter.BillHistoryAdapter;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
 import vn.edu.huflit.clothes.models.Bill;
-import vn.edu.huflit.clothes.models.BillHistoryDTO;
+import vn.edu.huflit.clothes.models.UserIdDTO;
 import vn.edu.huflit.clothes.models.User;
 
 public class BillHistoryFragment extends Fragment {
@@ -59,7 +59,7 @@ public class BillHistoryFragment extends Fragment {
     }
 
     private void getBillHistory(User user) {
-        BillHistoryDTO bill = new BillHistoryDTO(user.getID());
+        UserIdDTO bill = new UserIdDTO(user.getID());
         ApiService.apiService.getBillHistory(bill).enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {

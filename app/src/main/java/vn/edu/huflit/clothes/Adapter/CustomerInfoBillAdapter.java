@@ -56,10 +56,16 @@ public class CustomerInfoBillAdapter extends RecyclerView.Adapter<CustomerInfoBi
         holder.nameCustomer.setText(customer.getNameCustomer());
         holder.phoneCustomer.setText(customer.getPhoneNumber());
         holder.addressCustomer.setText(customer.getAddress());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onClick(customer);
+                listener.onDeleteClick(customer);
+            }
+        });
+        holder.editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onEditClick(customer);
             }
         });
     }
@@ -75,17 +81,21 @@ public class CustomerInfoBillAdapter extends RecyclerView.Adapter<CustomerInfoBi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nameCustomer, addressCustomer, phoneCustomer;
+        private ImageView deleteBtn,editBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameCustomer = itemView.findViewById(R.id.name_info_customer);
             addressCustomer = itemView.findViewById(R.id.address_info_customer);
             phoneCustomer = itemView.findViewById(R.id.phone_info_customer);
+            deleteBtn = itemView.findViewById(R.id.delete_customer_info);
+            editBtn = itemView.findViewById(R.id.edit_customer_info);
         }
     }
 
     public interface Listener {
-        void onClick(Customer customer);
+        void onDeleteClick(Customer customer);
+        void onEditClick(Customer customer);
     }
 
 }

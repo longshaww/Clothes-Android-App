@@ -9,12 +9,14 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import vn.edu.huflit.clothes.models.Bill;
-import vn.edu.huflit.clothes.models.BillHistoryDTO;
+import vn.edu.huflit.clothes.models.UserIdDTO;
 import vn.edu.huflit.clothes.models.ChangePasswordDTO;
 import vn.edu.huflit.clothes.models.CreateBillDTO;
 import vn.edu.huflit.clothes.models.Customer;
@@ -33,7 +35,7 @@ public interface ApiService {
             .create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.9:4000/")
+            .baseUrl("http://192.168.1.5:4000/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
@@ -72,10 +74,16 @@ public interface ApiService {
     Call<Bill> postBill(@Body CreateBillDTO bill);
 
     @POST("bill/history")
-    Call<List<Bill>> getBillHistory(@Body BillHistoryDTO body);
+    Call<List<Bill>> getBillHistory(@Body UserIdDTO body);
 
     @POST("bill/user")
-    Call<List<Customer>> getCustomerInfo(@Body BillHistoryDTO body);
+    Call<List<Customer>> getCustomerInfo(@Body UserIdDTO body);
+
+    @DELETE("bill/customer/{id}")
+    Call<Customer> deleteCustomerInfo(@Path("id") String customerID);
+
+    @PUT("bill/customer/{id}")
+    Call<Customer> editCustomerInfo(@Path("id") String customerID,@Body Customer customer);
 
     @POST("bill/customer")
     Call<Customer> postNewCustomer(@Body Customer customer);

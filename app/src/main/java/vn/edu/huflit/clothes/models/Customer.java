@@ -19,6 +19,13 @@ public class Customer {
         this.userID = userID;
     }
 
+    public Customer(String nameCustomer ,String address,String phoneNumber){
+        this.nameCustomer = nameCustomer;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
+
+
     public String get_id() {
         return _id;
     }

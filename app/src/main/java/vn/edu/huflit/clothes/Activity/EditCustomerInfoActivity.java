@@ -21,7 +21,7 @@ import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
 import vn.edu.huflit.clothes.models.Customer;
 import vn.edu.huflit.clothes.models.User;
 
-public class AddCustomerInfoActivity extends AppCompatActivity {
+public class EditCustomerInfoActivity extends AppCompatActivity {
     Toolbar toolbar;
     Button changeCustomerInfoBtn;
     TextInputLayout nameCustomer, addressCustomer, phoneCustomer;
@@ -30,16 +30,16 @@ public class AddCustomerInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_customer_info);
+        setContentView(R.layout.activity_edit_customer_info);
         init();
     }
 
     private void init() {
-        nameCustomer = findViewById(R.id.name_customer_info_change);
-        addressCustomer = findViewById(R.id.address_customer_info_change);
-        phoneCustomer = findViewById(R.id.phone_customer_info_change);
+        nameCustomer = findViewById(R.id.name_customer_info_change_edit);
+        addressCustomer = findViewById(R.id.address_customer_info_change_edit);
+        phoneCustomer = findViewById(R.id.phone_customer_info_change_edit);
 
-        toolbar = findViewById(R.id.toolbar_back_to_customer_info_activity);
+        toolbar = findViewById(R.id.toolbar_back_to_customer_info_activity_edit);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -47,18 +47,18 @@ public class AddCustomerInfoActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddCustomerInfoActivity.this, CustomerInfoActivity.class);
+                Intent intent = new Intent(EditCustomerInfoActivity.this, CustomerInfoActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-        getSupportActionBar().setTitle("New customer info");
-        changeCustomerInfoBtn = findViewById(R.id.btn_change_customer_info);
-        changeCustomerInfoBtn.setOnClickListener(this::addNewCustomerInfoSubmit);
+        getSupportActionBar().setTitle("Edit customer info");
+        changeCustomerInfoBtn = findViewById(R.id.btn_change_customer_info_edit);
+        changeCustomerInfoBtn.setOnClickListener(this::editNewCustomerInfoSubmit);
         user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
     }
 
-    private void addNewCustomerInfoSubmit(View view) {
+    private void editNewCustomerInfoSubmit(View view) {
         String name = nameCustomer.getEditText().getText().toString();
         String address = addressCustomer.getEditText().getText().toString();
         String phone = phoneCustomer.getEditText().getText().toString();
@@ -72,28 +72,25 @@ public class AddCustomerInfoActivity extends AppCompatActivity {
             phoneCustomer.setError("Bạn cần phải nhập sđt");
         }
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(address) && !TextUtils.isEmpty(phone)) {
-            Customer customer = user.getCustomer();
-            customer.setNameCustomer(name);
-            customer.setPhoneNumber(phone);
-            customer.setAddress(address);
-            customer.setUserID(user.getID());
-            sendNewCustomer(customer);
+            Customer customer = new Customer(name,address,phone);
+            sendEditCustomer(customer);
         }
     }
 
-    private void sendNewCustomer(Customer customer) {
-        ApiService.apiService.postNewCustomer(customer).enqueue(new Callback<Customer>() {
+    private void sendEditCustomer(Customer customer) {
+        String customerId = getIntent().getStringExtra("customerId");
+        ApiService.apiService.editCustomerInfo(customerId,customer).enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
-                if (response.isSuccessful()) {
-                    Intent intent = new Intent(AddCustomerInfoActivity.this, CustomerInfoActivity.class);
+                if(response.isSuccessful()){
+                    Intent intent = new Intent(EditCustomerInfoActivity.this,CustomerInfoActivity.class);
                     startActivity(intent);
                 }
             }
 
             @Override
             public void onFailure(Call<Customer> call, Throwable t) {
-                Toast.makeText(AddCustomerInfoActivity.this, "Something wrong ~!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditCustomerInfoActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

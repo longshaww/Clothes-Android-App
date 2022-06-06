@@ -1,16 +1,16 @@
 package vn.edu.huflit.clothes.Activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +22,17 @@ import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.Adapter.CustomerInfoBillAdapter;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
-import vn.edu.huflit.clothes.models.BillHistoryDTO;
+import vn.edu.huflit.clothes.models.UserIdDTO;
 import vn.edu.huflit.clothes.models.Customer;
 import vn.edu.huflit.clothes.models.User;
 
-public class ChangeCustomerInfoActivity extends AppCompatActivity implements CustomerInfoBillAdapter.Listener {
+public class CustomerInfoActivity extends AppCompatActivity implements CustomerInfoBillAdapter.Listener {
     RecyclerView infoCustomerRcv;
     CustomerInfoBillAdapter customerInfoBillAdapter;
     ArrayList<Customer> listCustomers;
     User user;
     Button addNewCustomerInfoBtn;
+    View view;
 
 
     @Override
@@ -51,6 +52,7 @@ public class ChangeCustomerInfoActivity extends AppCompatActivity implements Cus
 
 
     private void init() {
+        view = findViewById(R.id.activity_change_customer_info);
         user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
         listCustomers = new ArrayList<>();
         infoCustomerRcv = findViewById(R.id.info_customer_rcv);
@@ -68,7 +70,7 @@ public class ChangeCustomerInfoActivity extends AppCompatActivity implements Cus
 
     private void getCustomerInfo() {
         User user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
-        BillHistoryDTO customer = new BillHistoryDTO(user.getID());
+        UserIdDTO customer = new UserIdDTO(user.getID());
 
         ApiService.apiService.getCustomerInfo(customer).enqueue(new Callback<List<Customer>>() {
             @Override
@@ -82,18 +84,45 @@ public class ChangeCustomerInfoActivity extends AppCompatActivity implements Cus
 
             @Override
             public void onFailure(Call<List<Customer>> call, Throwable t) {
-                Toast.makeText(ChangeCustomerInfoActivity.this, "Something wrong ~!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CustomerInfoActivity.this, "Something wrong ~!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void onClickAddNewCustomerInfo(View view){
-        Intent intent = new Intent(this,AddCustomerInfoActivity.class);
+    public void onClickAddNewCustomerInfo(View view) {
+        Intent intent = new Intent(this, AddCustomerInfoActivity.class);
         startActivity(intent);
     }
 
-    @Override
-    public void onClick(Customer customer) {
 
+    @Override
+    public void onDeleteClick(Customer customer) {
+        if (customer.get_id().equals(user.customer.get_id())) {
+            Snackbar.make(view, "Không thể xóa thông tin này"
+                    , Snackbar.LENGTH_LONG).show();
+        } else {
+            ApiService.apiService.deleteCustomerInfo(customer.get_id()).enqueue(new Callback<Customer>() {
+                @Override
+                public void onResponse(Call<Customer> call, Response<Customer> response) {
+                    if (response.isSuccessful()) {
+                        Snackbar.make(view, "Đã xoá thông tin"
+                                , Snackbar.LENGTH_LONG).show();
+                        getCustomerInfo();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Customer> call, Throwable t) {
+                    Toast.makeText(CustomerInfoActivity.this, "Something wrong ~!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onEditClick(Customer customer) {
+        Intent intent = new Intent(this, EditCustomerInfoActivity.class);
+        intent.putExtra("customerId",customer.get_id());
+        startActivity(intent);
     }
 }
