@@ -127,7 +127,7 @@ public class CustomerInfoActivity extends AppCompatActivity implements CustomerI
     @Override
     public void onEditClick(Customer customer) {
         Intent intent = new Intent(this, EditCustomerInfoActivity.class);
-        intent.putExtra("customerId", customer.get_id());
+        intent.putExtra("customer", customer);
         startActivity(intent);
     }
 

@@ -26,6 +26,7 @@ public class EditCustomerInfoActivity extends AppCompatActivity {
     Button changeCustomerInfoBtn;
     TextInputLayout nameCustomer, addressCustomer, phoneCustomer;
     User user;
+    Customer customerGlobal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +36,14 @@ public class EditCustomerInfoActivity extends AppCompatActivity {
     }
 
     private void init() {
+        customerGlobal = (Customer) getIntent().getSerializableExtra("customer");
         nameCustomer = findViewById(R.id.name_customer_info_change_edit);
         addressCustomer = findViewById(R.id.address_customer_info_change_edit);
         phoneCustomer = findViewById(R.id.phone_customer_info_change_edit);
+
+        nameCustomer.getEditText().setText(customerGlobal.getNameCustomer());
+        addressCustomer.getEditText().setText(customerGlobal.getAddress());
+        phoneCustomer.getEditText().setText(customerGlobal.getPhoneNumber());
 
         toolbar = findViewById(R.id.toolbar_back_to_customer_info_activity_edit);
         setSupportActionBar(toolbar);
@@ -72,18 +78,17 @@ public class EditCustomerInfoActivity extends AppCompatActivity {
             phoneCustomer.setError("Bạn cần phải nhập sđt");
         }
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(address) && !TextUtils.isEmpty(phone)) {
-            Customer customer = new Customer(name,address,phone);
+            Customer customer = new Customer(name, address, phone);
             sendEditCustomer(customer);
         }
     }
 
     private void sendEditCustomer(Customer customer) {
-        String customerId = getIntent().getStringExtra("customerId");
-        ApiService.apiService.editCustomerInfo(customerId,customer).enqueue(new Callback<Customer>() {
+        ApiService.apiService.editCustomerInfo(customerGlobal.get_id(), customer).enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
-                if(response.isSuccessful()){
-                    Intent intent = new Intent(EditCustomerInfoActivity.this,CustomerInfoActivity.class);
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(EditCustomerInfoActivity.this, CustomerInfoActivity.class);
                     startActivity(intent);
                 }
             }

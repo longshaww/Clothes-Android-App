@@ -1,6 +1,8 @@
 package vn.edu.huflit.clothes.models;
 
-public class Customer {
+import java.io.Serializable;
+
+public class Customer implements Serializable {
     private String _id;
     private String nameCustomer;
     private String address;
