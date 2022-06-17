@@ -17,6 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.ErrorContent;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
 import vn.edu.huflit.clothes.Utils.Validation;
 import vn.edu.huflit.clothes.models.Customer;
@@ -70,13 +71,13 @@ public class EditCustomerInfoActivity extends AppCompatActivity {
         String address = addressCustomer.getEditText().getText().toString();
         String phone = phoneCustomer.getEditText().getText().toString();
         if (Validation.isValidName(name)) {
-            nameCustomer.setError("Please enter your name");
+            nameCustomer.setError(ErrorContent.invalidName);
         }
         if (Validation.isValidAddress(address)) {
-            addressCustomer.setError("Please enter your address");
+            addressCustomer.setError(ErrorContent.invalidAddress);
         }
         if (Validation.isValidPhoneNumber(phone)) {
-            phoneCustomer.setError("Please enter your phone");
+            phoneCustomer.setError(ErrorContent.invalidPhone);
         }
         if (Validation.isValidName(name) && Validation.isValidPhoneNumber(phone) && Validation.isValidAddress(address)) {
             nameCustomer.setError(null);
@@ -94,6 +95,9 @@ public class EditCustomerInfoActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Intent intent = new Intent(EditCustomerInfoActivity.this, CustomerInfoActivity.class);
                     startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Sửa thông tin thành công", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Sửa thông tin thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -35,6 +35,7 @@ import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.Fragment.CartFragment;
 import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.ErrorContent;
 import vn.edu.huflit.clothes.Utils.Validation;
 import vn.edu.huflit.clothes.models.User;
 import vn.edu.huflit.clothes.models.UserLoginDTO;
@@ -95,10 +96,10 @@ public class SigninActivity extends AppCompatActivity {
         String getEmail = emailInput.getEditText().getText().toString().trim();
         String getPassword = passwordInput.getEditText().getText().toString().trim();
         if (!Validation.isValidEmail(getEmail)) {
-            emailInput.setError("Please enter your email");
+            emailInput.setError(ErrorContent.invalidEmail);
         }
         if (!Validation.isValidPassword(getPassword)) {
-            passwordInput.setError("Please enter your password");
+            passwordInput.setError(ErrorContent.invalidPassword);
         }
         if (Validation.isValidEmail(getEmail) && Validation.isValidPassword(getPassword)) {
             emailInput.setError(null);

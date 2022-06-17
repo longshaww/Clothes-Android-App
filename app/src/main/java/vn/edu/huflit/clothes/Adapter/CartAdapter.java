@@ -86,7 +86,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             Picasso.get().load("https:" + cart.getImage()).into(holder.productImage);
             holder.productName.setText(cart.getName());
             holder.productSize.setText(cart.getSize());
-            holder.productTotal.setText(Integer.toString(cart.getPrice() * cart.getQty()));
+            holder.productTotal.setText(Integer.toString(cart.getPrice() * cart.getQty())+".000đ");
             holder.productQty.setText(Integer.toString(cart.getQty()));
             holder.deleteCartBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -21,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.ErrorContent;
 import vn.edu.huflit.clothes.Utils.Validation;
 import vn.edu.huflit.clothes.models.User;
 import vn.edu.huflit.clothes.models.UserRegisterDTO;
@@ -75,22 +76,22 @@ public class SignupActivity extends AppCompatActivity {
         String getPassword = passwordInput.getEditText().getText().toString();
         String getConfirmPassword = confirmPasswordInput.getEditText().getText().toString();
         if (!Validation.isValidEmail(getEmail)) {
-            emailInput.setError("Please enter your email");
+            emailInput.setError(ErrorContent.invalidEmail);
         }
         if (!Validation.isValidName(getName)) {
-            nameInput.setError("Please enter your name");
+            nameInput.setError(ErrorContent.invalidName);
         }
         if (!Validation.isValidPhoneNumber(getPhone)) {
-            phoneInput.setError("Please enter your phone number");
+            phoneInput.setError(ErrorContent.invalidPhone);
         }
         if (!Validation.isValidAddress(getAddress)) {
-            addressInput.setError("Please enter your address");
+            addressInput.setError(ErrorContent.invalidAddress);
         }
         if (!Validation.isValidPassword(getPassword)) {
-            passwordInput.setError("Please enter your password");
+            passwordInput.setError(ErrorContent.invalidPassword);
         }
         if (!getConfirmPassword.equals(getPassword)) {
-            confirmPasswordInput.setError("Your confirm password doesn't match");
+            confirmPasswordInput.setError(ErrorContent.invalidPasswordConfirm);
         }
         if (Validation.isValidEmail(getEmail) && Validation.isValidName(getName) && Validation.isValidPhoneNumber(getPhone)
                 && Validation.isValidAddress(getAddress) && Validation.isValidPassword(getPassword) && getConfirmPassword.equals(getPassword)) {

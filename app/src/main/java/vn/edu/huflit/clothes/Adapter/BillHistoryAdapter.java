@@ -55,7 +55,7 @@ public class BillHistoryAdapter extends RecyclerView.Adapter<BillHistoryAdapter.
             return;
         }
         holder.billId.setText("Bill #" + bill.get_id());
-        holder.billTotal.setText("Total: " +Integer.toString(bill.getTotal()));
+        holder.billTotal.setText("Total: " +Integer.toString(bill.getTotal())+".000đ");
         holder.billQty.setText("Qty: " +Integer.toString(bill.getQtyProduct()));
         holder.billMethod.setText("Method "+bill.getPaymentMethod());
         if (bill.getStatus()) {

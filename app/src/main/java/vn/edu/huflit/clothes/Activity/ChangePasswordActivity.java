@@ -23,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.ErrorContent;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
 import vn.edu.huflit.clothes.Utils.Validation;
 import vn.edu.huflit.clothes.models.ChangePasswordDTO;
@@ -60,13 +61,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
         String newPassword = newPasswordInput.getEditText().getText().toString();
         String confirmPassword = confirmPasswordInput.getEditText().getText().toString();
         if (TextUtils.isEmpty(currentPassword)) {
-            currentPasswordInput.setError("Please enter your current password");
+            currentPasswordInput.setError(ErrorContent.emptyCurrentPassword);
         }
         if (!Validation.isValidPassword(newPassword)) {
-            newPasswordInput.setError("Please enter your new password");
+            newPasswordInput.setError(ErrorContent.emptyNewPassword);
         }
         if (!confirmPassword.equals(newPassword)) {
-            confirmPasswordInput.setError("Your confirm password doesn't match");
+            confirmPasswordInput.setError(ErrorContent.invalidPasswordConfirm);
         }
         if (!TextUtils.isEmpty(currentPassword) && Validation.isValidPassword(newPassword) && confirmPassword.equals(newPassword)) {
             currentPasswordInput.setError(null);
