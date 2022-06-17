@@ -91,7 +91,7 @@ public class DetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
-                System.out.println("Call Api Failed");
+                Toast.makeText(DetailActivity.this, "Something wrong ~!", Toast.LENGTH_SHORT).show();
             }
         });
     }

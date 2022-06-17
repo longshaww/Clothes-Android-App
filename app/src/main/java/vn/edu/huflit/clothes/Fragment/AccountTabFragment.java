@@ -38,7 +38,6 @@ public class AccountTabFragment extends Fragment {
     SharedPreferences sharedPreferences;
     Gson gson;
     TextView nameAccount, emailAccount,phoneAccount,addressAccount;
-    CircleImageView avatarAccount;
     LinearProgressIndicator loadingUpdateAccount;
 
     @Override
@@ -70,7 +69,6 @@ public class AccountTabFragment extends Fragment {
         emailAccount = mView.findViewById(R.id.email_account);
         phoneAccount = mView.findViewById(R.id.phone_account);
         addressAccount = mView.findViewById(R.id.address_account);
-        avatarAccount = mView.findViewById(R.id.avatar_account);
         loadingUpdateAccount = mView.findViewById(R.id.loading_update_account);
         logoutBtn.setOnClickListener(this::onLogOutClick);
         changePasswordBtn.setOnClickListener(this::onChangePasswordClick);
@@ -85,9 +83,6 @@ public class AccountTabFragment extends Fragment {
         emailAccount.setText(user.getEmail());
         phoneAccount.setText(user.getPhoneNumber());
         addressAccount.setText(user.getAddress());
-        if (user.getAvatar() != null) {
-            Picasso.get().load(user.getAvatar()).into(avatarAccount);
-        }
     }
 
     public void onLogOutClick(View view) {

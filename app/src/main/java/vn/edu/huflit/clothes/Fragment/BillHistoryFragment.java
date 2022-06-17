@@ -1,11 +1,14 @@
 package vn.edu.huflit.clothes.Fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +20,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
+import vn.edu.huflit.clothes.Activity.CollectionActivity;
+import vn.edu.huflit.clothes.Activity.PaymentActivity;
 import vn.edu.huflit.clothes.Adapter.BillHistoryAdapter;
+import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
 import vn.edu.huflit.clothes.models.Bill;
@@ -49,7 +55,7 @@ public class BillHistoryFragment extends Fragment {
         getBillHistory(user);
     }
 
-    private void init () {
+    private void init() {
         billHistoryRcv = mView.findViewById(R.id.billRcv);
         listBills = new ArrayList();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -63,7 +69,7 @@ public class BillHistoryFragment extends Fragment {
         ApiService.apiService.getBillHistory(bill).enqueue(new Callback<List<Bill>>() {
             @Override
             public void onResponse(Call<List<Bill>> call, Response<List<Bill>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     listBills.clear();
                     listBills.addAll(response.body());
                     billHistoryAdapter.setList(listBills);

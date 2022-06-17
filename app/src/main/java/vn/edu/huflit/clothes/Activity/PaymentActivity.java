@@ -163,11 +163,13 @@ public class PaymentActivity extends AppCompatActivity implements CartAdapter.Li
         ApiService.apiService.postBill(bill).enqueue(new Callback<Bill>() {
             @Override
             public void onResponse(Call<Bill> call, Response<Bill> response) {
-                Toast.makeText(PaymentActivity.this, "Hoàn tất", Toast.LENGTH_SHORT).show();
-                cartHelper.clearCart();
-                loadingCheckout.setVisibility(View.INVISIBLE);
-                sendNotification();
-                MainActivity.bottomNavigationView.getOrCreateBadge(R.id.navigation_cart).setNumber(cartHelper.cartCount());
+                if(response.isSuccessful()){
+                    Toast.makeText(PaymentActivity.this, "Hoàn tất", Toast.LENGTH_SHORT).show();
+                    cartHelper.clearCart();
+                    loadingCheckout.setVisibility(View.INVISIBLE);
+                    sendNotification();
+                    MainActivity.bottomNavigationView.getOrCreateBadge(R.id.navigation_cart).setNumber(cartHelper.cartCount());
+                }
             }
 
             @Override

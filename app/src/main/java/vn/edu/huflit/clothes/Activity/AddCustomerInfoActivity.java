@@ -18,6 +18,7 @@ import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
+import vn.edu.huflit.clothes.Utils.Validation;
 import vn.edu.huflit.clothes.models.Customer;
 import vn.edu.huflit.clothes.models.User;
 
@@ -62,16 +63,19 @@ public class AddCustomerInfoActivity extends AppCompatActivity {
         String name = nameCustomer.getEditText().getText().toString();
         String address = addressCustomer.getEditText().getText().toString();
         String phone = phoneCustomer.getEditText().getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            nameCustomer.setError("Bạn cần phải nhập tên");
+        if (!Validation.isValidName(name)) {
+            nameCustomer.setError("Please enter your name");
         }
-        if (TextUtils.isEmpty(address)) {
-            addressCustomer.setError("Bạn cần phải nhập địa chỉ");
+        if (!Validation.isValidAddress(address)) {
+            addressCustomer.setError("Please enter your address");
         }
-        if (TextUtils.isEmpty(phone)) {
-            phoneCustomer.setError("Bạn cần phải nhập sđt");
+        if (!Validation.isValidPhoneNumber(phone)) {
+            phoneCustomer.setError("Please enter your phone number");
         }
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(address) && !TextUtils.isEmpty(phone)) {
+        if (Validation.isValidName(name) && Validation.isValidAddress(address) && Validation.isValidPhoneNumber(phone)) {
+            nameCustomer.setError(null);
+            addressCustomer.setError(null);
+            phoneCustomer.setError(null);
             Customer customer = user.getCustomer();
             customer.setNameCustomer(name);
             customer.setPhoneNumber(phone);

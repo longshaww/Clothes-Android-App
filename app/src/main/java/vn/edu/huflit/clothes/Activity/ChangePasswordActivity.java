@@ -24,6 +24,7 @@ import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.R;
 import vn.edu.huflit.clothes.Utils.GetUserSharePreferences;
+import vn.edu.huflit.clothes.Utils.Validation;
 import vn.edu.huflit.clothes.models.ChangePasswordDTO;
 import vn.edu.huflit.clothes.models.User;
 
@@ -61,34 +62,40 @@ public class ChangePasswordActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(currentPassword)) {
             currentPasswordInput.setError("Please enter your current password");
         }
-        if (TextUtils.isEmpty(newPassword)) {
+        if (!Validation.isValidPassword(newPassword)) {
             newPasswordInput.setError("Please enter your new password");
         }
         if (!confirmPassword.equals(newPassword)) {
             confirmPasswordInput.setError("Your confirm password doesn't match");
         }
-        if (!TextUtils.isEmpty(currentPassword) && !TextUtils.isEmpty(newPassword) && confirmPassword.equals(newPassword)){
+        if (!TextUtils.isEmpty(currentPassword) && Validation.isValidPassword(newPassword) && confirmPassword.equals(newPassword)) {
             currentPasswordInput.setError(null);
             newPasswordInput.setError(null);
             confirmPasswordInput.setError(null);
             loadingChangePassword.setVisibility(View.VISIBLE);
-            requestChangePassword(currentPassword,newPassword);
+            requestChangePassword(currentPassword, newPassword);
         }
     }
 
-    public void requestChangePassword(String currentPassword,String newPassword){
+    public void requestChangePassword(String currentPassword, String newPassword) {
         User user = GetUserSharePreferences.handleSharePreferences(this);
-        ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO(user.getID(),currentPassword,newPassword);
+        ChangePasswordDTO changePasswordDTO = new ChangePasswordDTO(user.getID(), currentPassword, newPassword);
         ApiService.apiService.changePassword(changePasswordDTO).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                User resUser = response.body();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("user", gson.toJson(resUser));
-                editor.commit();
-                loadingChangePassword.setVisibility(View.INVISIBLE);
-                Snackbar.make(changePasswordActivity, "Đổi mật khẩu thành công"
-                        , Snackbar.LENGTH_LONG).show();
+                if (response.isSuccessful()) {
+                    User resUser = response.body();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("user", gson.toJson(resUser));
+                    editor.commit();
+                    loadingChangePassword.setVisibility(View.INVISIBLE);
+                    Snackbar.make(changePasswordActivity, "Đổi mật khẩu thành công"
+                            , Snackbar.LENGTH_LONG).show();
+                } else {
+                    loadingChangePassword.setVisibility(View.INVISIBLE);
+                    Snackbar.make(changePasswordActivity, "Mật khẩu cũ không đúng"
+                            , Snackbar.LENGTH_LONG).show();
+                }
             }
 
             @Override

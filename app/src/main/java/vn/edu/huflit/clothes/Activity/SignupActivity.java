@@ -21,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.Validation;
 import vn.edu.huflit.clothes.models.User;
 import vn.edu.huflit.clothes.models.UserRegisterDTO;
 
@@ -73,26 +74,26 @@ public class SignupActivity extends AppCompatActivity {
         String getAddress = addressInput.getEditText().getText().toString();
         String getPassword = passwordInput.getEditText().getText().toString();
         String getConfirmPassword = confirmPasswordInput.getEditText().getText().toString();
-        if (!SigninActivity.isValidEmail(getEmail)) {
+        if (!Validation.isValidEmail(getEmail)) {
             emailInput.setError("Please enter your email");
         }
-        if (TextUtils.isEmpty(getName)) {
+        if (!Validation.isValidName(getName)) {
             nameInput.setError("Please enter your name");
         }
-        if (TextUtils.isEmpty(getPhone)) {
+        if (!Validation.isValidPhoneNumber(getPhone)) {
             phoneInput.setError("Please enter your phone number");
         }
-        if (TextUtils.isEmpty(getAddress)) {
+        if (!Validation.isValidAddress(getAddress)) {
             addressInput.setError("Please enter your address");
         }
-        if (TextUtils.isEmpty(getPassword)) {
+        if (!Validation.isValidPassword(getPassword)) {
             passwordInput.setError("Please enter your password");
         }
         if (!getConfirmPassword.equals(getPassword)) {
             confirmPasswordInput.setError("Your confirm password doesn't match");
         }
-        if (SigninActivity.isValidEmail(getEmail) && !TextUtils.isEmpty(getName) && !TextUtils.isEmpty(getPhone)
-                && !TextUtils.isEmpty(getAddress) && !TextUtils.isEmpty(getPassword) && getConfirmPassword.equals(getPassword)) {
+        if (Validation.isValidEmail(getEmail) && Validation.isValidName(getName) && Validation.isValidPhoneNumber(getPhone)
+                && Validation.isValidAddress(getAddress) && Validation.isValidPassword(getPassword) && getConfirmPassword.equals(getPassword)) {
             emailInput.setError(null);
             nameInput.setError(null);
             phoneInput.setError(null);
@@ -114,12 +115,15 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "Tạo tài khoản thành công !", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignupActivity.this, SigninActivity.class);
                     startActivity(intent);
+                } else {
+                    loadingSignUp.setVisibility(View.INVISIBLE);
+                    Toast.makeText(SignupActivity.this, "Email đã tồn tại !", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(SignupActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignupActivity.this, "Tạo tài khoản thất bại !", Toast.LENGTH_SHORT).show();
             }
         });
     }

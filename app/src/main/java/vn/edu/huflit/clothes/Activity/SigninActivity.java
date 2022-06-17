@@ -35,6 +35,7 @@ import vn.edu.huflit.clothes.API.ApiService;
 import vn.edu.huflit.clothes.Fragment.CartFragment;
 import vn.edu.huflit.clothes.MainActivity;
 import vn.edu.huflit.clothes.R;
+import vn.edu.huflit.clothes.Utils.Validation;
 import vn.edu.huflit.clothes.models.User;
 import vn.edu.huflit.clothes.models.UserLoginDTO;
 
@@ -90,19 +91,16 @@ public class SigninActivity extends AppCompatActivity {
         finish();
     }
 
-    public static boolean isValidEmail(String target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
-    }
     public void onClickSignIn(View v) {
         String getEmail = emailInput.getEditText().getText().toString().trim();
         String getPassword = passwordInput.getEditText().getText().toString().trim();
-        if (!isValidEmail(getEmail)) {
+        if (!Validation.isValidEmail(getEmail)) {
             emailInput.setError("Please enter your email");
         }
-        if(TextUtils.isEmpty(getPassword)){
+        if (!Validation.isValidPassword(getPassword)) {
             passwordInput.setError("Please enter your password");
         }
-        if(isValidEmail(getEmail) && !TextUtils.isEmpty(getPassword)) {
+        if (Validation.isValidEmail(getEmail) && Validation.isValidPassword(getPassword)) {
             emailInput.setError(null);
             passwordInput.setError(null);
             UserLoginDTO user = new UserLoginDTO(getEmail, getPassword);
@@ -116,6 +114,7 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
+                    loadingSignIn.setVisibility(View.INVISIBLE);
                     User user = response.body();
                     String cookie = response.headers().get("Set-Cookie");
                     SharedPreferences.Editor editor = sharedPref.edit();
@@ -123,9 +122,9 @@ public class SigninActivity extends AppCompatActivity {
                     editor.putString("user", gson.toJson(user));
                     editor.commit();
                     checkLogin();
-                }
-                if(response.code() == 400){
-                    Snackbar.make(signInActivity, "Vui lòng kiểm tra lại thông tin đăng nhập"
+                } else {
+                    loadingSignIn.setVisibility(View.INVISIBLE);
+                    Snackbar.make(signInActivity, "Tài khoản hoặc mật khẩu không đúng"
                             , Snackbar.LENGTH_LONG).show();
                 }
             }
