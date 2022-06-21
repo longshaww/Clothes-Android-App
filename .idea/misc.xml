@@ -23,6 +23,7 @@
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/drawable-v24/button1_bg.xml" value="0.3455" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3675" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/drawable/btn_gradient_style.xml" value="0.3455" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/drawable/circle_border.xml" value="0.288" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3675" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/drawable/indicator_default.xml" value="0.3455" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/drawable/indicator_selected.xml" value="0.3455" />
@@ -32,12 +33,17 @@
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/drawable/search_view.xml" value="0.3675" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/drawable/silver.xml" value="0.3675" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/acitivity_top.xml" value="0.18802083333333333" />
-        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_collection.xml" value="0.18802083333333333" />
-        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_detail.xml" value="0.18802083333333333" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_add_customer_info.xml" value="0.36666666666666664" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_change_customer_info.xml" value="0.36666666666666664" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_change_password.xml" value="0.36666666666666664" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_collection.xml" value="0.33" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_detail.xml" value="0.33" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_edit_customer_info.xml" value="0.36666666666666664" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_forgot_password.xml" value="0.36666666666666664" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_intro.xml" value="0.36666666666666664" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_payment.xml" value="0.33" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_signin.xml" value="0.36666666666666664" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/activity_signup.xml" value="0.3161231884057971" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/cart_product.xml" value="0.36666666666666664" />
@@ -47,7 +53,15 @@
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/fragment_cart.xml" value="0.36666666666666664" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/fragment_favourite.xml" value="0.36666666666666664" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/fragment_search.xml" value="0.27309782608695654" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/fragment_tab_account.xml" value="0.33" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/fragment_tab_history.xml" value="0.1703125" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/item_bill_history.xml" value="0.36666666666666664" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/item_cart.xml" value="0.27309782608695654" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/item_checkout_cart.xml" value="0.3632246376811594" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/item_info_customer.xml" value="0.3632246376811594" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/layout_screen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/layout_screen_intro.xml" value="0.3632246376811594" />
         <entry key="..\:/Nam3HK2/LTDDNC/Project/Clothes-Android-App/app/src/main/res/layout/product_card.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable/search_view.xml" value="0.2475" />
         <entry key="app/src/main/res/layout/acitivity_top.xml" value="0.1640625" />

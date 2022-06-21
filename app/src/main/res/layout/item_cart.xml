@@ -13,18 +13,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
+
         <ImageView
             android:id="@+id/deleteCartBtn"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:src="@drawable/delete_icon"
-            />
+            android:src="@drawable/delete_icon" />
 
         <ImageView
             android:id="@+id/imgProductCart"
-            android:layout_width="120dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
             android:layout_toEndOf="@+id/deleteCartBtn"
             tools:srcCompat="@tools:sample/avatars" />
 
@@ -35,15 +35,15 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/imgProductCart"
             android:orientation="vertical"
-            android:paddingHorizontal="40dp">
+            android:paddingHorizontal="30dp">
 
             <TextView
                 android:id="@+id/productNameCart"
-                android:layout_width="100dp"
-                android:textStyle="bold"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:paddingVertical="8dp"
-                android:text="Printed hoodie" />
+                android:text="Printed hoodie"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/productSizeCart"

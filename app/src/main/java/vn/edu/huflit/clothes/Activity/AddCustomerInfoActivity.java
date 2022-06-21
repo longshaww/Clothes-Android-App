@@ -33,6 +33,12 @@ public class AddCustomerInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_customer_info);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("New Customer Info");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         init();
     }
 
@@ -41,23 +47,15 @@ public class AddCustomerInfoActivity extends AppCompatActivity {
         addressCustomer = findViewById(R.id.address_customer_info_change);
         phoneCustomer = findViewById(R.id.phone_customer_info_change);
 
-        toolbar = findViewById(R.id.toolbar_back_to_customer_info_activity);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddCustomerInfoActivity.this, CustomerInfoActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        getSupportActionBar().setTitle("New customer info");
         changeCustomerInfoBtn = findViewById(R.id.btn_change_customer_info);
         changeCustomerInfoBtn.setOnClickListener(this::addNewCustomerInfoSubmit);
         user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void addNewCustomerInfoSubmit(View view) {

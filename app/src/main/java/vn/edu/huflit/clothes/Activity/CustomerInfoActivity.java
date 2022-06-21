@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,6 +44,12 @@ public class CustomerInfoActivity extends AppCompatActivity implements CustomerI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_customer_info);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Change Account");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         init();
         initCustomerInfoRcv();
         getCustomerInfo();
@@ -54,6 +61,11 @@ public class CustomerInfoActivity extends AppCompatActivity implements CustomerI
         getCustomerInfo();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     private void init() {
         gson = new Gson();

@@ -11,140 +11,266 @@
         android:id="@+id/account_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/avatar_account"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="15dp"
             android:src="@drawable/ic_camera" />
 
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="12dp">
+            android:layout_height="355dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="15dp"
+            app:cardUseCompatPadding="true">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_email" />
-
-            <TextView
-                android:id="@+id/email_account"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:singleLine="true"
-                android:text="Email"
-                android:textSize="18dp" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp">
+
+                    <ImageView
+                        android:layout_width="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:paddingEnd="2dp"
+                        android:paddingStart="4dp"
+                        android:src="@drawable/icon_email" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Email"
+                            android:textColor="@color/headings"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/email_account"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="3dp"
+                            android:singleLine="true"
+                            android:text="Email"
+                            android:textSize="18dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/grey" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp">
+
+                    <ImageView
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:src="@drawable/ic_person" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Name"
+                            android:textColor="@color/headings"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/name_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:singleLine="true"
+                            android:text="Name"
+                            android:textSize="18dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/grey" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp">
+
+                    <ImageView
+                        android:layout_width="33dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:src="@drawable/ic_phone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Phone"
+                            android:textColor="@color/headings"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/phone_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:singleLine="true"
+                            android:text="Phone"
+                            android:textSize="18dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/grey" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp">
+
+                    <ImageView
+                        android:layout_width="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:paddingEnd="4dp"
+                        android:paddingStart="4dp"
+                        android:src="@drawable/ic_address" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Address"
+                            android:textColor="@color/headings"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/address_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:singleLine="true"
+                            android:text="Address"
+                            android:textSize="18dp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/grey" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="12dp">
+            android:orientation="vertical"
+            android:paddingHorizontal="15dp"
+            android:gravity="center">
 
-            <ImageView
-                android:layout_width="33dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_person" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/name_account"
+                <Button
+                    android:id="@+id/btn_update_customer_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/black"
+                    android:text="Change account"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="13dp"
+                    app:cornerRadius="10dp"/>
+
+                <Button
+                    android:id="@+id/btn_change_password_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/black"
+                    android:text="Change password"
+                    app:cornerRadius="10dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/logout_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="8dp"
-                android:singleLine="true"
-                android:text="Name"
-                android:textSize="18dp" />
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/black"
+                android:text="Log out"
+                android:layout_gravity="center"
+                app:cornerRadius="10dp"/>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="12dp">
-
-            <ImageView
-                android:layout_width="33dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_phone" />
-
-            <TextView
-                android:id="@+id/phone_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="8dp"
-                android:singleLine="true"
-                android:text="Phone"
-                android:textSize="18dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="12dp">
-
-            <ImageView
-                android:layout_width="33dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_address" />
-
-            <TextView
-                android:id="@+id/address_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="8dp"
-                android:singleLine="true"
-                android:text="Address"
-                android:textSize="18dp" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_update_customer_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/black"
-            android:text="Update" />
-
-        <Button
-            android:id="@+id/btn_change_password_account"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/black"
-            android:text="Change password" />
-
-        <Button
-            android:id="@+id/logout_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/black"
-            android:text="Log out" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/loading_update_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            app:cornerRadius="10dp"/>
     </LinearLayout>
 </ScrollView>
