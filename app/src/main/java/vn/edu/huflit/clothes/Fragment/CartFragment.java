@@ -84,7 +84,7 @@ public class CartFragment extends Fragment implements CartAdapter.Listener, Cart
         Double sub = cartHelper.getAllProductCart().stream().mapToDouble(cart -> cart.getPrice() * cart.getQty()).sum();
         Double total = sub + 35;
         subTotalPrice.setText(sub.toString() + "00 VNĐ");
-        totalPrice.setText(total.toString() + "00 VNĐ ");
+        totalPrice.setText(total.toString() + "00 VNĐ");
     }
 
     public void initCartRcv() {

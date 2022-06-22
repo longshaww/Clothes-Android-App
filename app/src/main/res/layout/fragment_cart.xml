@@ -12,16 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingHorizontal="10dp">
-
-
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:text="My cart"
             android:textSize="30dp"
-            android:textStyle="bold" />
+            android:textStyle="bold|italic" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvCart"
@@ -30,9 +30,10 @@
             android:layout_marginTop="10dp" />
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_marginTop="20dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,8 +52,9 @@
                 android:textStyle="bold" />
         </RelativeLayout>
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,8 +74,9 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -93,7 +96,6 @@
         </RelativeLayout>
         <Button
             android:id="@+id/button_check_out"
-            style="@style/Button1"
             android:layout_width="342dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -104,16 +106,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hoàn thiện bộ suư tập của bạn"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="8dp"
+            android:text="Complete your collection"
+            android:layout_marginTop="16dp"
             android:textStyle="bold"
             android:textSize="18dp"
+            android:paddingHorizontal="10dp"
             />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cartNewArrivalsRcv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
             />
     </LinearLayout>
 </ScrollView>

@@ -22,20 +22,20 @@
                 android:id="@+id/name_info_customer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="50dp"
                 android:text="LONG TRẦN"
                 android:textColor="@color/black"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/address_info_customer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="50dp"
                 android:text="219 ÂU DƯƠNG LẠC P2 Q8"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -44,9 +44,9 @@
                 android:id="@+id/phone_info_customer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="50dp"
                 android:text="+84 0987654321"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -75,15 +75,13 @@
                 android:src="@drawable/delete_icon" />
         </LinearLayout>
 
-        <TextView
+        <Button
             android:id="@+id/checked_customer_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chọn"
-            android:textSize="18dp"
-            android:textColor="#0000EE"
+            android:text="Select"
+            android:textSize="12dp"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             />
 

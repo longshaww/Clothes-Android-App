@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_back_to_customer_info_activity"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent" />
@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_baseline_account_circle_24"
-            android:drawablePadding="12dp"
+            android:drawablePadding="17dp"
             android:hint="Name"
             android:imeOptions="actionNext"
             android:inputType="text"
@@ -55,7 +55,8 @@
             android:imeOptions="actionNext"
             android:inputType="text"
             android:minWidth="320dp"
-            android:minHeight="45dp" />
+            android:minHeight="45dp"
+            android:paddingStart="12dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -73,12 +74,13 @@
             android:layout_gravity="center"
             android:background="@android:color/transparent"
             android:drawableStart="@drawable/ic_phone"
-            android:drawablePadding="12dp"
+            android:drawablePadding="17dp"
             android:hint="Phone"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:minWidth="320dp"
-            android:minHeight="45dp" />
+            android:minHeight="45dp"
+            android:paddingStart="20dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -86,5 +88,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Thêm" />
+        android:text="Add" />
 </LinearLayout>

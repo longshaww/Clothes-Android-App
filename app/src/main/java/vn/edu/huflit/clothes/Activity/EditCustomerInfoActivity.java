@@ -34,7 +34,19 @@ public class EditCustomerInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_customer_info);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Edit Customer Info");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         init();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void init() {
@@ -47,20 +59,6 @@ public class EditCustomerInfoActivity extends AppCompatActivity {
         addressCustomer.getEditText().setText(customerGlobal.getAddress());
         phoneCustomer.getEditText().setText(customerGlobal.getPhoneNumber());
 
-        toolbar = findViewById(R.id.toolbar_back_to_customer_info_activity_edit);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EditCustomerInfoActivity.this, CustomerInfoActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        getSupportActionBar().setTitle("Edit customer info");
         changeCustomerInfoBtn = findViewById(R.id.btn_change_customer_info_edit);
         changeCustomerInfoBtn.setOnClickListener(this::editNewCustomerInfoSubmit);
         user = GetUserSharePreferences.handleSharePreferences(getApplicationContext());

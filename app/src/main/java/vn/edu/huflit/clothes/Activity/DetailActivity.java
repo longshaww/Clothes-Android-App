@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -54,6 +55,16 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         init();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     private void init() {
@@ -98,6 +109,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setIncomingIntent(Product product) {
         txtNameDetail.setText(product.getNameProduct());
+        getSupportActionBar().setTitle(product.getNameProduct());
         txtOverviewDetail.setText(product.getDescription());
         txtPriceDetail.setText(product.getPrice() + ".000đ");
 

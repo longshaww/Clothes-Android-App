@@ -37,12 +37,10 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // make the activity on full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // when this activity is about to be launch we need to check if its openened before or not
         if (restorePrefData()) {
 
             Intent intent = new Intent(getApplicationContext(), SigninActivity.class );
@@ -52,10 +50,6 @@ public class IntroActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_intro);
 
-//        // hide the action bar
-//        getSupportActionBar().hide();
-
-        // ini views
         btnNext = findViewById(R.id.btn_next);
         btnGetStarted = findViewById(R.id.btn_get_started);
         tabIndicator = findViewById(R.id.tab_indicator);
@@ -63,9 +57,9 @@ public class IntroActivity extends AppCompatActivity {
         tvSkip = findViewById(R.id.tv_skip);
 
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Nice Clothes","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img1));
-        mList.add(new ScreenItem("Fast Delivery","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img2));
-        mList.add(new ScreenItem("Easy Payment","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit",R.drawable.img3));
+        mList.add(new ScreenItem("Nice Clothes","Welcome to our clothing store, store with modern, eye-catching fashion models, you will surely have your choice in our clothing store.",R.drawable.img1));
+        mList.add(new ScreenItem("Fast Delivery","With a carefully selected fast delivery team and careful packaging, you are sure to bring you beautiful and intact clothes.",R.drawable.img2));
+        mList.add(new ScreenItem("Easy Payment","With an easy and convenient payment system, you can comfortably shop at our clothing store without any worries.",R.drawable.img3));
 
         screenPager =findViewById(R.id.screen_viewpager);
         introAdapter = new IntroAdapter(this,mList);
