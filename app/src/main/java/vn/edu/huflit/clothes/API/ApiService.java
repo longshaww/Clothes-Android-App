@@ -40,22 +40,22 @@ public interface ApiService {
             .build()
             .create(ApiService.class);
 
-    @GET("android")
+    @GET("android/collection")
     Call<List<Product>> getAllProduct();
 
-    @GET("android/new-arrivals")
+    @GET("android/collection/new-arrivals")
     Call<List<Product>> getNewArrivals();
 
-    @GET("android/tops")
+    @GET("android/collection/tops")
     Call<List<Product>> getTops();
 
-    @GET("android/bottoms")
+    @GET("android/collection/bottoms")
     Call<List<Product>> getBottoms();
 
-    @GET("android/accessories")
+    @GET("android/collection/accessories")
     Call<List<Product>> getAccessories();
 
-    @GET("android/outerwears")
+    @GET("android/collection/outerwears")
     Call<List<Product>> getOuterWears();
 
     @GET("search")
@@ -64,34 +64,30 @@ public interface ApiService {
     @GET("product/{id}")
     Call<Product> getProductDetail(@Path("id") String productId);
 
-    @POST("authCookie/login")
+    @POST("android/auth/login")
     Call<User> login(@Body UserLoginDTO user);
 
-    @POST("authCookie/register")
+    @POST("android/auth/register")
     Call<User> register(@Body UserRegisterDTO user);
 
-    @POST("bill")
+    @POST("android/bill")
     Call<Bill> postBill(@Body CreateBillDTO bill);
 
-    @POST("bill/history")
+    @POST("android/bill/history")
     Call<List<Bill>> getBillHistory(@Body UserIdDTO body);
 
-    @POST("bill/user")
+    @POST("android/bill/user")
     Call<List<Customer>> getCustomerInfo(@Body UserIdDTO body);
 
-    @DELETE("bill/customer/{id}")
+    @DELETE("android/bill/customer/{id}")
     Call<Customer> deleteCustomerInfo(@Path("id") String customerID);
 
-    @PUT("bill/customer/{id}")
-    Call<Customer> editCustomerInfo(@Path("id") String customerID,@Body Customer customer);
+    @PUT("android/bill/customer/{id}")
+    Call<Customer> editCustomerInfo(@Path("id") String customerID, @Body Customer customer);
 
-    @POST("bill/customer")
+    @POST("android/bill/customer")
     Call<Customer> postNewCustomer(@Body Customer customer);
 
-    @POST("authCookie/update")
+    @POST("android/auth/update")
     Call<User> changePassword(@Body ChangePasswordDTO body);
-
-    @POST("authCookie/update")
-    Call<User> updateAddressPhoneNumber(@Body UpdateAddressPhoneNumberDTO body);
-
 }
