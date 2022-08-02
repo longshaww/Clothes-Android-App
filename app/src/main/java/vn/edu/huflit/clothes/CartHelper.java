@@ -33,7 +33,8 @@ public class CartHelper {
         SQLiteDatabase db = openDB();
 
         String sqlFavorites = "CREATE TABLE IF NOT EXISTS tblCart(" +
-                "ID TEXT NOT NULL PRIMARY KEY," +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                "IDProduct TEXT NOT NULL," +
                 "Image TEXT," +
                 "Name TEXT," +
                 "Price INTEGER," +
@@ -53,14 +54,14 @@ public class CartHelper {
         if (csr != null) {
             if (csr.moveToFirst()) {
                 do {
-                    String _id = csr.getString(0);
-                    String image = csr.getString(1);
-                    String name = csr.getString(2);
-                    String price = csr.getString(3);
-                    String description = csr.getString(4);
-                    String size = csr.getString(5);
-                    String qty = csr.getString(6);
-                    String sum = csr.getString(7);
+                    String _id = csr.getString(1);
+                    String image = csr.getString(2);
+                    String name = csr.getString(3);
+                    String price = csr.getString(4);
+                    String description = csr.getString(5);
+                    String size = csr.getString(6);
+                    String qty = csr.getString(7);
+                    String sum = csr.getString(8);
                     arr.add(new Cart(_id, image, name, Integer.parseInt(price), description, size, Integer.parseInt(qty), Integer.parseInt(sum)));
                 } while (csr.moveToNext());
             }
@@ -77,10 +78,10 @@ public class CartHelper {
         if (csr != null) {
             if (csr.moveToFirst()) {
                 do {
-                    String _id = csr.getString(0);
-                    String size = csr.getString(5);
-                    String qty = csr.getString(6);
-                    String sum = csr.getString(7);
+                    String _id = csr.getString(1);
+                    String size = csr.getString(6);
+                    String qty = csr.getString(7);
+                    String sum = csr.getString(8);
                     arr.add(new Cart(_id, size, Integer.parseInt(qty), Integer.parseInt(sum)));
                 } while (csr.moveToNext());
             }
@@ -90,43 +91,68 @@ public class CartHelper {
     }
 
     public void insertCart(String _id, String image, String name, String price, String description, String size, String qty, String sum) {
+        SQLiteDatabase db = openDB();
+        String productQuery = "select * from tblCart where IDProduct='" + _id + "'";
+        Cursor csr = db.rawQuery(productQuery, null);
+        if (csr.getCount() <= 0) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("IDProduct", _id);
+            contentValues.put("Image", image);
+            contentValues.put("Name", name);
+            contentValues.put("Price", price);
+            contentValues.put("Description", description);
+            contentValues.put("Size", size);
+            contentValues.put("Qty", qty);
+            contentValues.put("Sum", sum);
+            db.insert("tblCart", null, contentValues);
+        } else {
+            if (csr.moveToFirst()) {
+                String currentSize = csr.getString(6);
+                ContentValues contentValues = new ContentValues();
+                if (!size.trim().equals(currentSize.trim())) {
+                    contentValues.put("IDProduct", _id);
+                    contentValues.put("Image", image);
+                    contentValues.put("Name", name);
+                    contentValues.put("Price", price);
+                    contentValues.put("Description", description);
+                    contentValues.put("Size", size);
+                    contentValues.put("Qty", qty);
+                    contentValues.put("Sum", sum);
+                    db.insert("tblCart", null, contentValues);
+                } else {
+                    int currentQty = Integer.parseInt(csr.getString(7));
+                    int currentSum = Integer.parseInt(csr.getString(8));
+                    contentValues.put("Qty", currentQty + 1);
+                    contentValues.put("Sum", currentSum + Integer.parseInt(sum));
+                    db.update("tblCart", contentValues, "IDProduct = ? and Size = ?", new String[]{_id, size});
+                }
+            }
+        }
+    }
+
+    public void deleteRow(String _id, String size) {
+        SQLiteDatabase db = openDB();
+        db.delete("tblCart", "IDProduct = ? and Size = ?", new String[]{_id, size});
+    }
+
+    public void changeQty(String _id, String size, String qty, String sum) {
+        SQLiteDatabase db = openDB();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("ID", _id);
-        contentValues.put("Image", image);
-        contentValues.put("Name", name);
-        contentValues.put("Price", price);
-        contentValues.put("Description", description);
-        contentValues.put("Size", size);
         contentValues.put("Qty", qty);
         contentValues.put("Sum", sum);
-        SQLiteDatabase db = openDB();
-        db.insert("tblCart", null, contentValues);
-
+        db.update("tblCart", contentValues, "IDProduct = ? and Size = ?", new String[]{_id, size});
     }
 
-    public void deleteRow(String _id) {
-        SQLiteDatabase db = openDB();
-        db.delete("tblCart", "ID = ?", new String[]{_id});
-
+    public int cartCount() {
+        int cartCount = getAllProductCart().stream().mapToInt(cart -> cart.getQty()).sum();
+        if (cartCount < 1) {
+            return 0;
+        }
+        return cartCount;
     }
 
-    public void changeQty(String _id,String qty,String sum) {
+    public void clearCart() {
         SQLiteDatabase db = openDB();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("Qty",qty);
-        contentValues.put("Sum",sum);
-        db.update("tblCart",contentValues,"ID= ? ",new String[]{_id});
-    }
-    public int cartCount(){
-       int cartCount = getAllProductCart().stream().mapToInt(cart -> cart.getQty()).sum();
-       if(cartCount <1){
-           return 0;
-       }
-       return cartCount;
-    }
-
-    public void clearCart(){
-        SQLiteDatabase db = openDB();
-        db.delete("tblCart",null,null);
+        db.delete("tblCart", null, null);
     }
 }

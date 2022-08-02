@@ -86,12 +86,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             Picasso.get().load("https:" + cart.getImage()).into(holder.productImage);
             holder.productName.setText(cart.getName());
             holder.productSize.setText(cart.getSize());
-            holder.productTotal.setText(Integer.toString(cart.getPrice() * cart.getQty())+".000đ");
+            holder.productTotal.setText(Integer.toString(cart.getPrice()));
             holder.productQty.setText(Integer.toString(cart.getQty()));
             holder.deleteCartBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    cartHelper.deleteRow(cart.getId());
+                    cartHelper.deleteRow(cart.getId(),cart.getSize());
                     list = cartHelper.getAllProductCart();
                     notifyDataSetChanged();
                     updateResult();
@@ -105,7 +105,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     Integer increaseQty = Integer.parseInt(holder.productQty.getText().toString()) + 1;
                     holder.productQty.setText(Integer.toString(increaseQty));
                     Integer getTotal = cart.getPrice() * Integer.parseInt(holder.productQty.getText().toString());
-                    cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(), getTotal.toString());
+                    cartHelper.changeQty(cart.getId(),cart.getSize(), holder.productQty.getText().toString(), getTotal.toString());
                     updateResult();
                 }
             });
@@ -120,7 +120,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         holder.productQty.setText(Integer.toString(decreaseQty));
                     }
                     Integer getTotal = cart.getPrice() * Integer.parseInt(holder.productQty.getText().toString());
-                    cartHelper.changeQty(cart.getId(), holder.productQty.getText().toString(), getTotal.toString());
+                    cartHelper.changeQty(cart.getId(),cart.getSize(), holder.productQty.getText().toString(), getTotal.toString());
                     updateResult();
                 }
             });
